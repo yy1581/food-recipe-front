@@ -47,3 +47,27 @@
   font-size: 1.1rem;
   color: #333;
 }
+
+.subList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 12px 14px 12px;
+}
+
+.subItem {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 16px;
+  background: #f1f3f5;
+  color: #333;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: 1px solid #e5e7eb;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.subItem:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}

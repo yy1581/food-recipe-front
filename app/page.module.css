@@ -1,44 +1,42 @@
-.main {
+/* c:\reactProject\food-recipe-front\app\page.module.css */
+.container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 61px - 4rem);
   padding: 2rem;
+  gap: 3rem;
+}
+
+.hero {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 .title {
-  font-size: 3.5rem;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 3rem;
+  font-weight: bold;
   margin-bottom: 1rem;
-  color: #111;
+  color: #333;
 }
 
-.title span {
-  color: #0070f3;
-}
-
-.description {
+.subtitle {
   font-size: 1.25rem;
   color: #666;
-  margin-bottom: 2rem;
 }
 
 .ctaButton {
   display: inline-block;
-  background-color: #0070f3;
-  color: #fff;
-  padding: 0.75rem 1.5rem;
+  background-color: #ff6347; /* Tomato color */
+  color: white;
+  padding: 1rem 2rem;
   border-radius: 8px;
   text-decoration: none;
   font-size: 1.1rem;
-  font-weight: 500;
-  transition: background-color 0.2s ease-in-out, transform 0.2s ease;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: 2rem;
 }
 
 .ctaButton:hover {
-  background-color: #005bb5;
-  transform: translateY(-2px);
+  background-color: #e5533d;
 }

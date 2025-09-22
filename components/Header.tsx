@@ -6,7 +6,7 @@ export default function Header() {
     <header className={style.header}>
       <div className={style.container}>
         <Link href="/" className={style.logo}>
-          레시피로고
+          사이트이름
         </Link>
         <nav className={style.nav}>
           <Link href="/recipes">레시피 목록</Link>

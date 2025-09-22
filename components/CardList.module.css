@@ -1,0 +1,49 @@
+.cardList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 800px;
+}
+
+.cardItem {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.cardItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cardItem a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 200px;
+  position: relative;
+}
+
+.imageWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardValue {
+  padding: 1rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}

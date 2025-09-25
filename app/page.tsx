@@ -54,7 +54,6 @@ export default function Home() {
         </p>
       </section>
       <CategoryCardList items={categoryItems} />
-      <DefaultCardList items={difficultyItems} />
     </div>
   );
 }

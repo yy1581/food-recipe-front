@@ -21,7 +21,7 @@ export default function Header() {
       setIsDropdownOpen(false);
       alert("로그아웃되었습니다!");
       router.push("/");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("로그아웃 실패:", error);
       alert("로그아웃 중 오류가 발생했습니다.");
     }
@@ -32,7 +32,7 @@ export default function Header() {
   };
 
   useEffect(() => {
-    // 페이지 로드 시 인증 상태 확인
+    // 페이지 로드 시 인증 상태 확인(user-id 쿠키로)
     const checkAuthStatus = () => {
       const authenticated = authAPI.isAuthenticated();
       const currentUserId = authAPI.getCurrentUserId();

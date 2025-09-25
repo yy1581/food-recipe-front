@@ -1,7 +1,7 @@
 import axios from "./axios";
 
 // API 응답 타입 정의
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
   data?: T;
@@ -41,12 +41,16 @@ export const authAPI = {
     try {
       const response = await axios.post("/api/auth/login", { id });
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { data?: { message?: string }; status?: number };
+      };
       throw {
         success: false,
         message:
-          error.response?.data?.message || "로그인 중 오류가 발생했습니다.",
-        status: error.response?.status,
+          axiosError.response?.data?.message ||
+          "로그인 중 오류가 발생했습니다.",
+        status: axiosError.response?.status,
       };
     }
   },
@@ -56,12 +60,16 @@ export const authAPI = {
     try {
       const response = await axios.post("/api/auth/signup", { id });
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { data?: { message?: string }; status?: number };
+      };
       throw {
         success: false,
         message:
-          error.response?.data?.message || "회원가입 중 오류가 발생했습니다.",
-        status: error.response?.status,
+          axiosError.response?.data?.message ||
+          "회원가입 중 오류가 발생했습니다.",
+        status: axiosError.response?.status,
       };
     }
   },
@@ -70,10 +78,8 @@ export const authAPI = {
   logout: (): void => {
     try {
       cookieUtils.clearAuth();
-    } catch (error: any) {
-      throw () => {
-        console.error("로그아웃 중 오류가 발생했습니다.", error);
-      };
+    } catch (error: unknown) {
+      console.error("로그아웃 중 오류가 발생했습니다.", error);
     }
   },
 
@@ -98,13 +104,16 @@ export const recipeAPI = {
     try {
       const response = await axios.get("/api/recipes", { params });
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { data?: { message?: string }; status?: number };
+      };
       throw {
         success: false,
         message:
-          error.response?.data?.message ||
+          axiosError.response?.data?.message ||
           "레시피 조회 중 오류가 발생했습니다.",
-        status: error.response?.status,
+        status: axiosError.response?.status,
       };
     }
   },

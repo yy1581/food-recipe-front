@@ -76,7 +76,9 @@ function CardItem({
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          onToggle && onToggle();
+          if (onToggle) {
+            onToggle();
+          }
         }
       }}
     >

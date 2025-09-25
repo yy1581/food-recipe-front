@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
 import { authAPI } from "@/lib/api";
 import styles from "./page.module.css";
@@ -10,7 +9,6 @@ export default function LoginPage() {
   const [id, setId] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -44,11 +42,13 @@ export default function LoginPage() {
       } else {
         setError(result.message);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("로그인 실패:", error);
-      setError(
-        error.message || "네트워크 오류가 발생했습니다. 다시 시도해주세요."
-      );
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "네트워크 오류가 발생했습니다. 다시 시도해주세요.";
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }

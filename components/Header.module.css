@@ -1,7 +1,7 @@
 .header {
   background-color: #ffffff;
-  border-bottom: 1px solid #eaeaea;
-  padding: 1rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.875rem 1.5rem;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -16,34 +16,36 @@
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: #1f2937;
   text-decoration: none;
+  letter-spacing: -0.025em;
 }
 
 .nav {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem;
   align-items: center;
 }
 
 .nav a,
 .authLinks a {
-  color: #555;
+  color: #6b7280;
   text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.2s ease-in-out;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
 }
 
 .nav a:hover,
 .authLinks a:hover {
-  color: #0070f3;
+  color: #2563eb;
 }
 
 .authLinks {
   display: flex;
-  gap: 1rem;
+  gap: 0.875rem;
   align-items: center;
 }
 

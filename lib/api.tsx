@@ -5,6 +5,14 @@ export interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
   data?: T;
+  status?: number;
+}
+
+// 레시피 생성 응답 타입 추가
+export interface RecipeGenerateResponse {
+  foodName: string;
+  recipe: string;
+  generatedAt: string;
 }
 
 // 쿠키 유틸리티 함수들
@@ -113,6 +121,27 @@ export const recipeAPI = {
         message:
           axiosError.response?.data?.message ||
           "레시피 조회 중 오류가 발생했습니다.",
+        status: axiosError.response?.status,
+      };
+    }
+  },
+
+  // 레시피 생성
+  generateRecipe: async (
+    foodName: string
+  ): Promise<ApiResponse<RecipeGenerateResponse>> => {
+    try {
+      const response = await axios.post("/api/recipes/generate", { foodName });
+      return response.data;
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { data?: { message?: string }; status?: number };
+      };
+      throw {
+        success: false,
+        message:
+          axiosError.response?.data?.message ||
+          "레시피 생성 중 오류가 발생했습니다.",
         status: axiosError.response?.status,
       };
     }

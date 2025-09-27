@@ -33,9 +33,7 @@ export default function LoginPage() {
       const result = await authAPI.login(id.trim());
 
       if (result.success) {
-        // 로그인 성공
         alert("로그인되었습니다!");
-        // 짧은 지연 후 페이지 이동 (쿠키 설정 완료 보장)
         setTimeout(() => {
           window.location.href = "/";
         }, 100);

@@ -1,8 +1,8 @@
 /* Base button styles */
 .button {
-  border-radius: 0.5rem;
+  border-radius: 6px;
   font-weight: 500;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.15s ease;
   border: none;
   cursor: pointer;
   display: inline-flex;
@@ -10,15 +10,16 @@
   justify-content: center;
   text-decoration: none;
   font-family: inherit;
+  font-size: inherit;
 }
 
 .button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .button:disabled {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
@@ -29,16 +30,17 @@
 }
 
 .primary:hover:not(:disabled) {
-  background-color: #1d4ed8;
+  background-color: #1e40af;
 }
 
 .secondary {
-  background-color: #e5e7eb;
-  color: #111827;
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
 }
 
 .secondary:hover:not(:disabled) {
-  background-color: #d1d5db;
+  background-color: #e5e7eb;
 }
 
 .danger {
@@ -67,4 +69,20 @@
   padding: 0.75rem 1.5rem;
   font-size: 1.125rem;
   line-height: 1.75rem;
+}
+
+/* Loading styles */
+.loading {
+  position: relative;
+  cursor: wait !important;
+}
+
+.loadingContent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loadingText {
+  font-size: inherit;
 }

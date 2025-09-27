@@ -73,8 +73,7 @@ export default function Header() {
           사이트이름
         </Link>
         <nav className={style.nav}>
-          <Link href="/recipes">레시피 목록</Link>
-          <Link href="/recipes/generate">레시피 생성</Link>
+          <Link href="/recipes">레시피 생성</Link>
         </nav>
         <div className={style.authLinks}>
           {isAuthenticated ? (

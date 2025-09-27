@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/Button";
 import { LoadingSpinner } from "@/components/Spinner";
+import { Error } from "@/components/Error";
 import { recipeAPI } from "@/lib/api";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
@@ -39,13 +40,9 @@ function RecipesContent() {
       } else {
         setError(result.message || "레시피 생성에 실패했습니다.");
       }
-    } catch (error: unknown) {
-      console.error("레시피 생성 실패:", error);
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "네트워크 오류가 발생했습니다.";
-      setError(errorMessage);
+    } catch (err) {
+      console.error("레시피 생성 실패:", err);
+      setError("네트워크 오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }
@@ -84,7 +81,14 @@ function RecipesContent() {
         </div>
       </form>
 
-      {error && <div className={styles.errorMessage}>{error}</div>}
+      {error && (
+        <Error
+          message={error}
+          type="error"
+          dismissible
+          onDismiss={() => setError("")}
+        />
+      )}
 
       {recipe && (
         <div className={styles.recipeContainer}>

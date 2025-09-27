@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
+import { Error } from "@/components/Error";
 import styles from "./page.module.css";
 
 export default function SignupPage() {
@@ -95,7 +96,15 @@ export default function SignupPage() {
               placeholder="아이디를 입력하세요"
               disabled={isLoading}
             />
-            {error && <p className={styles.errorMessage}>{error}</p>}
+            {error && (
+              <Error
+                message={error}
+                type="error"
+                size="small"
+                dismissible
+                onDismiss={() => setError("")}
+              />
+            )}
           </div>
 
           <Button

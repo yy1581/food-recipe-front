@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/Button";
+import { Error } from "@/components/Error";
 import { authAPI } from "@/lib/api";
 import styles from "./page.module.css";
 
@@ -40,13 +41,9 @@ export default function LoginPage() {
       } else {
         setError(result.message);
       }
-    } catch (error: unknown) {
-      console.error("로그인 실패:", error);
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "네트워크 오류가 발생했습니다. 다시 시도해주세요.";
-      setError(errorMessage);
+    } catch (err) {
+      console.error("로그인 실패:", err);
+      setError("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +72,15 @@ export default function LoginPage() {
               placeholder="아이디를 입력하세요"
               disabled={isLoading}
             />
-            {error && <p className={styles.errorMessage}>{error}</p>}
+            {error && (
+              <Error
+                message={error}
+                type="error"
+                size="small"
+                dismissible
+                onDismiss={() => setError("")}
+              />
+            )}
           </div>
 
           <Button

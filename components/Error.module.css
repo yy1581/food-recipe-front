@@ -1,0 +1,179 @@
+/* Base error styles */
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 6px;
+  border: 1px solid;
+  font-size: 0.875rem;
+  transition: all 0.15s ease;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.message {
+  line-height: 1.4;
+  flex: 1;
+}
+
+.dismissButton {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.dismissButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Type variants */
+.error.error {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.error.warning {
+  background-color: #fffbeb;
+  border-color: #fed7aa;
+  color: #d97706;
+}
+
+.error.info {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  color: #2563eb;
+}
+
+/* Size variants */
+.small {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.medium {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+.large {
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+}
+
+/* Specialized components */
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.retryButton {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.retryButton:hover {
+  background-color: #1e40af;
+}
+
+.validationContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pageError {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding: 2rem;
+}
+
+.pageErrorContent {
+  text-align: center;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.pageErrorTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.reloadButton {
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.reloadButton:hover {
+  background-color: #4b5563;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .pageError {
+    padding: 1rem;
+    min-height: 40vh;
+  }
+
+  .pageErrorContent {
+    gap: 1rem;
+  }
+
+  .pageErrorTitle {
+    font-size: 1.25rem;
+  }
+
+  .error {
+    font-size: 0.8rem;
+  }
+
+  .medium {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8rem;
+  }
+
+  .large {
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
+  }
+}

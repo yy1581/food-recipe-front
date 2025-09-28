@@ -7,10 +7,14 @@ export async function POST(request: NextRequest) {
 
     // 입력값 검증
     if (!foodName || typeof foodName !== "string") {
-      return NextResponse.json(
+      const errorResponse = NextResponse.json(
         { message: "음식 이름을 입력해주세요." },
         { status: 400 }
       );
+      errorResponse.headers.set("Access-Control-Allow-Origin", "*");
+      errorResponse.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
+      return errorResponse;
     }
 
     const trimmedFoodName = foodName.trim();
@@ -18,7 +22,7 @@ export async function POST(request: NextRequest) {
     // 테스트용 레시피 생성 (실제로는 백엔드 AI API 호출)
     const mockRecipe = generateMockRecipe(trimmedFoodName);
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         success: true,
         message: "레시피가 생성되었습니다.",
@@ -30,13 +34,35 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
+
+    // CORS 헤더 설정
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    response.headers.set("Access-Control-Allow-Credentials", "true");
+
+    return response;
   } catch (error) {
     console.error("레시피 생성 중 오류:", error);
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       { message: "서버 오류가 발생했습니다." },
       { status: 500 }
     );
+    errorResponse.headers.set("Access-Control-Allow-Origin", "*");
+    errorResponse.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    return errorResponse;
   }
+}
+
+// OPTIONS 메서드 처리 (CORS preflight)
+export async function OPTIONS() {
+  const response = new NextResponse(null, { status: 200 });
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+  response.headers.set("Access-Control-Allow-Credentials", "true");
+  return response;
 }
 
 // 테스트용 모크 레시피 생성 함수

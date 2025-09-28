@@ -8,20 +8,28 @@ export async function POST(request: NextRequest) {
 
     // 입력값 검증
     if (!id || typeof id !== "string") {
-      return NextResponse.json(
+      const errorResponse = NextResponse.json(
         { message: "아이디를 입력해주세요." },
         { status: 400 }
       );
+      errorResponse.headers.set("Access-Control-Allow-Origin", "*");
+      errorResponse.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
+      return errorResponse;
     }
 
     const trimmedId = id.trim();
 
     // 사용자 존재 확인
     if (!MockUserData.hasUser(trimmedId)) {
-      return NextResponse.json(
+      const errorResponse = NextResponse.json(
         { message: "존재하지 않는 아이디입니다." },
         { status: 401 }
       );
+      errorResponse.headers.set("Access-Control-Allow-Origin", "*");
+      errorResponse.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
+      return errorResponse;
     }
 
     // 로그인 성공
@@ -33,6 +41,12 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
+
+    // CORS 헤더 설정
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    response.headers.set("Access-Control-Allow-Credentials", "true");
 
     // 사용자 쿠키 생성
     response.cookies.set("user-id", trimmedId, {
@@ -46,9 +60,23 @@ export async function POST(request: NextRequest) {
     return response;
   } catch (error) {
     console.error("로그인 처리 중 오류:", error);
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       { message: "서버 오류가 발생했습니다." },
       { status: 500 }
     );
+    errorResponse.headers.set("Access-Control-Allow-Origin", "*");
+    errorResponse.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    return errorResponse;
   }
+}
+
+// OPTIONS 메서드 처리 (CORS preflight)
+export async function OPTIONS() {
+  const response = new NextResponse(null, { status: 200 });
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+  response.headers.set("Access-Control-Allow-Credentials", "true");
+  return response;
 }

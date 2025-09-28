@@ -74,6 +74,7 @@ export default function Header() {
         </Link>
         <nav className={style.nav}>
           <Link href="/recipes">레시피 생성</Link>
+          {isAuthenticated && <Link href="/my-recipes">나의 레시피</Link>}
         </nav>
         <div className={style.authLinks}>
           {isAuthenticated ? (
@@ -85,7 +86,7 @@ export default function Header() {
               {isDropdownOpen && (
                 <div className={style.dropdown}>
                   <Link
-                    href="/mypage"
+                    href="/my-recipes"
                     className={style.dropdownItem}
                     onClick={() => setIsDropdownOpen(false)}
                   >

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/Button";
 import { Error } from "@/components/Error";
 import { authAPI } from "@/lib/api";
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [id, setId] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -35,8 +37,9 @@ export default function LoginPage() {
 
       if (result.success) {
         alert("로그인되었습니다!");
+        const redirectUrl = searchParams.get("redirect") || "/";
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = redirectUrl;
         }, 100);
       } else {
         setError(result.message);

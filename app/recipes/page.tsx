@@ -3,7 +3,8 @@
 import { Button } from "@/components/Button";
 import { LoadingSpinner } from "@/components/Spinner";
 import { Error } from "@/components/Error";
-import { recipeAPI } from "@/lib/api";
+import { recipeAPI, authAPI } from "@/lib/api";
+import { RecipeHistoryManager } from "@/lib/recipeHistory";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 import styles from "./page.module.css";
@@ -37,6 +38,16 @@ function RecipesContent() {
 
       if (result.success && result.data) {
         setRecipe(result.data.recipe);
+
+        // 로그인된 사용자의 경우 히스토리에 저장
+        const userId = authAPI.getCurrentUserId();
+        if (userId) {
+          RecipeHistoryManager.addRecipe({
+            foodName: result.data.foodName,
+            recipe: result.data.recipe,
+            userId: userId,
+          });
+        }
       } else {
         setError(result.message || "레시피 생성에 실패했습니다.");
       }

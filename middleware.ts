@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
   // API 라우트에 대한 CORS 처리
   if (request.nextUrl.pathname.startsWith("/api/")) {
-    const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
-    
+    const origin =
+      request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+
     // Preflight OPTIONS 요청 처리
     if (request.method === "OPTIONS") {
       const response = new NextResponse(null, { status: 200 });

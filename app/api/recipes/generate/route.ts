@@ -11,7 +11,8 @@ export async function POST(request: NextRequest) {
         { message: "음식 이름을 입력해주세요." },
         { status: 400 }
       );
-      const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+      const origin =
+        request.headers.get("origin") || "https://food-recipe-front.vercel.app";
       errorResponse.headers.set("Access-Control-Allow-Origin", origin);
       errorResponse.headers.set(
         "Access-Control-Allow-Methods",
@@ -41,7 +42,8 @@ export async function POST(request: NextRequest) {
     );
 
     // CORS 헤더 설정
-    const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+    const origin =
+      request.headers.get("origin") || "https://food-recipe-front.vercel.app";
     response.headers.set("Access-Control-Allow-Origin", origin);
     response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
     response.headers.set("Access-Control-Allow-Headers", "Content-Type");
@@ -54,7 +56,8 @@ export async function POST(request: NextRequest) {
       { message: "서버 오류가 발생했습니다." },
       { status: 500 }
     );
-    const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+    const origin =
+      request.headers.get("origin") || "https://food-recipe-front.vercel.app";
     errorResponse.headers.set("Access-Control-Allow-Origin", origin);
     errorResponse.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
     errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
@@ -66,7 +69,8 @@ export async function POST(request: NextRequest) {
 // OPTIONS 메서드 처리 (CORS preflight)
 export async function OPTIONS(request: NextRequest) {
   const response = new NextResponse(null, { status: 200 });
-  const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+  const origin =
+    request.headers.get("origin") || "https://food-recipe-front.vercel.app";
   response.headers.set("Access-Control-Allow-Origin", origin);
   response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");

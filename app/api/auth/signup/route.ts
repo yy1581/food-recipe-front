@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     response.cookies.set("auth-token", trimmedId, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // HTTPS에서만 전송
-      sameSite: "strict", // CSRF 공격 방지
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // CSRF 공격 방지
       maxAge: 60 * 60 * 24 * 7, // 7일
       path: "/",
     });
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     response.cookies.set("user-id", trimmedId, {
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 60 * 60 * 24 * 7, // 7일
       path: "/",
     });

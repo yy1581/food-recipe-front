@@ -1,6 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // 최적화 설정
+  experimental: {
+    optimizePackageImports: ["react", "react-dom"],
+  },
+
+  // 리소스 힌트 최적화
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+
   async headers() {
     return [
       {

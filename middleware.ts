@@ -3,10 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
   // API 라우트에 대한 CORS 처리
   if (request.nextUrl.pathname.startsWith("/api/")) {
+    const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+    
     // Preflight OPTIONS 요청 처리
     if (request.method === "OPTIONS") {
       const response = new NextResponse(null, { status: 200 });
-      response.headers.set("Access-Control-Allow-Origin", "*");
+      response.headers.set("Access-Control-Allow-Origin", origin);
       response.headers.set(
         "Access-Control-Allow-Methods",
         "GET, POST, PUT, DELETE, OPTIONS"
@@ -22,7 +24,7 @@ export function middleware(request: NextRequest) {
 
     // 일반 요청에 대한 CORS 헤더 추가
     const response = NextResponse.next();
-    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Origin", origin);
     response.headers.set(
       "Access-Control-Allow-Methods",
       "GET, POST, PUT, DELETE, OPTIONS"

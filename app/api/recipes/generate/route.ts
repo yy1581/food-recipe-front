@@ -11,12 +11,14 @@ export async function POST(request: NextRequest) {
         { message: "음식 이름을 입력해주세요." },
         { status: 400 }
       );
-      errorResponse.headers.set("Access-Control-Allow-Origin", "*");
+      const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+      errorResponse.headers.set("Access-Control-Allow-Origin", origin);
       errorResponse.headers.set(
         "Access-Control-Allow-Methods",
         "POST, OPTIONS"
       );
       errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
+      errorResponse.headers.set("Access-Control-Allow-Credentials", "true");
       return errorResponse;
     }
 
@@ -39,7 +41,8 @@ export async function POST(request: NextRequest) {
     );
 
     // CORS 헤더 설정
-    response.headers.set("Access-Control-Allow-Origin", "*");
+    const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+    response.headers.set("Access-Control-Allow-Origin", origin);
     response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
     response.headers.set("Access-Control-Allow-Headers", "Content-Type");
     response.headers.set("Access-Control-Allow-Credentials", "true");
@@ -51,17 +54,20 @@ export async function POST(request: NextRequest) {
       { message: "서버 오류가 발생했습니다." },
       { status: 500 }
     );
-    errorResponse.headers.set("Access-Control-Allow-Origin", "*");
+    const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+    errorResponse.headers.set("Access-Control-Allow-Origin", origin);
     errorResponse.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
     errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    errorResponse.headers.set("Access-Control-Allow-Credentials", "true");
     return errorResponse;
   }
 }
 
 // OPTIONS 메서드 처리 (CORS preflight)
-export async function OPTIONS() {
+export async function OPTIONS(request: NextRequest) {
   const response = new NextResponse(null, { status: 200 });
-  response.headers.set("Access-Control-Allow-Origin", "*");
+  const origin = request.headers.get("origin") || "https://food-recipe-front.vercel.app";
+  response.headers.set("Access-Control-Allow-Origin", origin);
   response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
   response.headers.set("Access-Control-Allow-Credentials", "true");

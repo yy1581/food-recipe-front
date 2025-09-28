@@ -13,7 +13,10 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
       errorResponse.headers.set("Access-Control-Allow-Origin", "*");
-      errorResponse.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      errorResponse.headers.set(
+        "Access-Control-Allow-Methods",
+        "POST, OPTIONS"
+      );
       errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
       return errorResponse;
     }
@@ -27,7 +30,10 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
       errorResponse.headers.set("Access-Control-Allow-Origin", "*");
-      errorResponse.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      errorResponse.headers.set(
+        "Access-Control-Allow-Methods",
+        "POST, OPTIONS"
+      );
       errorResponse.headers.set("Access-Control-Allow-Headers", "Content-Type");
       return errorResponse;
     }

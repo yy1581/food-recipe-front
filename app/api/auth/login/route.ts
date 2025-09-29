@@ -50,9 +50,6 @@ export async function POST(request: NextRequest) {
         message: "로그인 성공",
         data: {
           userId: trimmedId,
-          cookieSet: true,
-          environment: process.env.NODE_ENV,
-          timestamp: new Date().toISOString(),
         },
       },
       { status: 200 }

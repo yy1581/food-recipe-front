@@ -18,10 +18,4 @@ const instance = axios.create({
   timeout: 10000,
 });
 
-// 요청 인터셉터로 추가 디버깅
-instance.interceptors.request.use((config) => {
-  console.log("API 요청:", `${config.baseURL || ""}${config.url || ""}`);
-  return config;
-});
-
 export default instance;

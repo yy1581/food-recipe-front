@@ -65,17 +65,9 @@ export async function POST(request: NextRequest) {
     response.headers.set("Access-Control-Allow-Headers", "Content-Type");
     response.headers.set("Access-Control-Allow-Credentials", "true");
 
-    // 사용자 쿠키 생성 - 프로덕션 환경 고려
+    // 사용자 쿠키 생성
     const isProduction = process.env.NODE_ENV === "production";
 
-    console.log("=== 쿠키 설정 디버그 ===");
-    console.log("Environment:", process.env.NODE_ENV);
-    console.log("Origin:", request.headers.get("origin"));
-    console.log("Host:", request.headers.get("host"));
-    console.log("User-Agent:", request.headers.get("user-agent"));
-    console.log("Is Production:", isProduction);
-
-    // 프로덕션에서는 sameSite를 none으로, secure를 true로 설정
     response.cookies.set("user-id", trimmedId, {
       httpOnly: false,
       secure: isProduction,
@@ -83,9 +75,6 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60, // 1시간
       path: "/",
     });
-
-    console.log("쿠키 설정 완료:", trimmedId);
-
     return response;
   } catch (error) {
     console.error("로그인 처리 중 오류:", error);

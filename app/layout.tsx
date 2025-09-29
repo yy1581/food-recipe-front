@@ -1,12 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Header from "@/components/Header";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "나만의 레시피",
   description: "다양한 레시피를 발견하고 공유하세요.",
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

@@ -70,7 +70,19 @@ function MyRecipeListItem({ recipe }: { recipe: Recipe }) {
 function RecipeDetail({ recipe }: { recipe: Recipe }) {
   return (
     <div className={styles.detailContainer}>
-      <p className={styles.detailDescription}>{recipe.description}</p>
+      <div className={styles.recipeHeader}>
+        <h3 className={styles.recipeTitle}>{recipe.name}</h3>
+      </div>
+      <div className={styles.recipeSteps}>
+        <h4 className={styles.stepsTitle}>조리 과정</h4>
+        <ol className={styles.stepsList}>
+          {recipe.description.map((step, index) => (
+            <li key={index} className={styles.stepItem}>
+              {step}
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   );
 }

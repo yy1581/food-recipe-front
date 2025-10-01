@@ -61,15 +61,6 @@ export async function POST(request: NextRequest) {
     response.headers.set("Access-Control-Allow-Headers", "Content-Type");
     response.headers.set("Access-Control-Allow-Credentials", "true");
 
-    // HTTP-only 쿠키 설정 (보안성을 위해)
-    response.cookies.set("auth-token", trimmedId, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // HTTPS에서만 전송
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // CSRF 공격 방지
-      maxAge: 60 * 60 * 24 * 7, // 7일
-      path: "/",
-    });
-
     // 클라이언트에서 접근 가능한 사용자 정보 쿠키 (선택사항)
     response.cookies.set("user-id", trimmedId, {
       httpOnly: false,

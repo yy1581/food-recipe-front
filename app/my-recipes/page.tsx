@@ -16,6 +16,13 @@ export default function MyRecipesPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  // 레시피 삭제 핸들러
+  const handleDeleteRecipe = (recipeId: number) => {
+    setRecipes(prevRecipes => prevRecipes.filter(recipe => recipe.id !== recipeId));
+    // 실제 구현에서는 API 호출로 서버에서도 삭제
+    // await recipeAPI.deleteRecipe(recipeId);
+  };
+
   useEffect(() => {
     // 인증 상태 확인
     const userId = authAPI.getCurrentUserId();
@@ -53,7 +60,7 @@ export default function MyRecipesPage() {
 
   return (
     <div className={styles.container}>
-      <MyRecipeList recipes={recipes} />
+      <MyRecipeList recipes={recipes} onDeleteRecipe={handleDeleteRecipe} />
     </div>
   );
 }

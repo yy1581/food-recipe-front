@@ -65,6 +65,15 @@
 /* 레시피 아이템 내용 */
 .itemContent {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.itemInfo {
+  flex: 1;
+  min-width: 0;
 }
 
 .itemTitle {
@@ -73,6 +82,57 @@
   color: #1f2937;
   margin: 0;
   line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 삭제 버튼 스타일 */
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+  transform: translateX(8px);
+  flex-shrink: 0;
+}
+
+.deleteButton:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+  transform: translateX(0);
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+}
+
+.deleteButton:active {
+  transform: translateX(0) scale(0.95);
+  background-color: #fecaca;
+}
+
+.deleteIcon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+}
+
+/* 아이템 호버 시 삭제 버튼 표시 */
+.recipeItem:hover .deleteButton {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 선택된 아이템에서는 항상 삭제 버튼 표시 */
+.recipeItem.selected .deleteButton {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* 레시피 상세 정보 */

@@ -1,0 +1,146 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-family: "NanumSquare", sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-family: "NanumSquare", sans-serif;
+  font-weight: 400;
+  color: #718096;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.sectionTitle {
+  font-family: "NanumSquare", sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.sectionDescription {
+  font-family: "NanumSquare", sans-serif;
+  color: #718096;
+  margin-bottom: 1.5rem;
+}
+
+.inputGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  font-family: "NanumSquare", sans-serif;
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-family: "NanumSquare", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  background: white;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input::placeholder {
+  color: #a0aec0;
+}
+
+/* 알레르기 그리드 */
+.allergyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.allergyButton {
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  font-family: "NanumSquare", sans-serif;
+  font-size: 0.9rem;
+  color: #4a5568;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.allergyButton:hover {
+  border-color: #cbd5e0;
+  background: #f7fafc;
+}
+
+.allergyButton.selected {
+  border-color: #babce1;
+  background: #b9bbe5;
+}
+
+/* 버튼 그룹 */
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .allergyGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+}

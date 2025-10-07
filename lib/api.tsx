@@ -11,7 +11,7 @@ export interface ApiResponse<T = unknown> {
 // 레시피 생성 응답 타입 추가
 export interface RecipeGenerateResponse {
   foodName: string;
-  recipe: string;
+  recipe: string[];
   generatedAt: string;
 }
 

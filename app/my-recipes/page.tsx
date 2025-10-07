@@ -8,7 +8,7 @@ import { LoadingSpinner } from "@/components/Spinner";
 import styles from "./page.module.css";
 import MyRecipeList from "@/components/MyRecipeList";
 import Recipe from "@/types/recipe";
-import { MockRecipes } from "../mock/mock";
+import { MockRecipes } from "../../lib/mock/mock";
 
 export default function MyRecipesPage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -18,7 +18,9 @@ export default function MyRecipesPage() {
 
   // 레시피 삭제 핸들러
   const handleDeleteRecipe = (recipeId: number) => {
-    setRecipes(prevRecipes => prevRecipes.filter(recipe => recipe.id !== recipeId));
+    setRecipes((prevRecipes) =>
+      prevRecipes.filter((recipe) => recipe.id !== recipeId)
+    );
     // 실제 구현에서는 API 호출로 서버에서도 삭제
     // await recipeAPI.deleteRecipe(recipeId);
   };

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MockUserData } from "../../../mock/mock";
+import { MockUserData } from "../../../../lib/mock/mock";
 import { getAllowedOrigin } from "@/lib/cors";
 
 export async function POST(request: NextRequest) {

@@ -47,7 +47,7 @@ export const authAPI = {
   // 로그인
   login: async (id: string): Promise<ApiResponse> => {
     try {
-      const response = await axios.post("/api/auth/login", { id });
+      const response = await axios.post("/api/auth/login", { memberId : id });
       return response.data;
     } catch (error: unknown) {
       const axiosError = error as {
@@ -131,7 +131,7 @@ export const recipeAPI = {
     foodName: string
   ): Promise<ApiResponse<RecipeGenerateResponse>> => {
     try {
-      const response = await axios.post("/api/recipes/generate", { foodName });
+      const response = await axios.post("/api/chats", { question: foodName });
       return response.data;
     } catch (error: unknown) {
       const axiosError = error as {

@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { foodName } = body;
+    const { question } = body;
 
     // 입력값 검증
-    if (!foodName || typeof foodName !== "string") {
+    if (!question || typeof question !== "string") {
       const errorResponse = NextResponse.json(
-        { message: "음식 이름을 입력해주세요." },
+        { message: "질문을 입력해주세요." },
         { status: 400 }
       );
       const origin =
@@ -23,17 +23,17 @@ export async function POST(request: NextRequest) {
       return errorResponse;
     }
 
-    const trimmedFoodName = foodName.trim();
+    const trimmedQuestion = question.trim();
 
     // 테스트용 레시피 생성 (실제로는 백엔드 AI API 호출)
-    const mockRecipe = generateMockRecipe(trimmedFoodName);
+    const mockRecipe = generateMockRecipe(trimmedQuestion);
 
     const response = NextResponse.json(
       {
         success: true,
         message: "레시피가 생성되었습니다.",
         data: {
-          foodName: trimmedFoodName,
+          foodName: trimmedQuestion,
           recipe: mockRecipe,
           generatedAt: new Date().toISOString(),
         },

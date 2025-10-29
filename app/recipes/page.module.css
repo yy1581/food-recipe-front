@@ -15,11 +15,16 @@
 }
 
 .form {
-  margin-bottom: 1.5rem;
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  /* fixed to bottom with 5px gap, centered within viewport and responsive */
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  z-index: 60;
+
+  width: calc(100% - 3rem);
+  max-width: 650px;
+  box-sizing: border-box;
 }
 
 .inputGroup {
@@ -71,11 +76,73 @@
 }
 
 .recipeContainer {
-  padding: 1.5rem;
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
+  padding: 0.5rem;
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+  border: 2px dashed rgb(217, 217, 238);
   border-radius: 8px;
   line-height: 1.6;
+}
+
+/* 채팅 UI 스타일 */
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 500px;
+  overflow-y: auto;
+}
+
+.message {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.bubble {
+  max-width: 78%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+  white-space: pre-wrap;
+}
+
+.bubble.user {
+  background: #2563eb;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.bubble.assistant {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-bottom-left-radius: 4px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.avatar.user {
+  background: #1e3a8a;
+  color: white;
+}
+
+.avatar.assistant {
+  background: #e6f0ff;
+  color: #0369a1;
 }
 
 .recipeTitle {
@@ -93,9 +160,8 @@
   padding: 1.25rem;
   border-radius: 6px;
   border: 1px solid #e5e7eb;
-}
-
-.recipeSteps {
+  width: 100%;
+  max-width: 700px;
   margin: 0;
   padding-left: 1.5rem;
   list-style: none;
@@ -147,7 +213,8 @@
   }
 
   .form {
-    padding: 1.25rem;
+    padding: 0.9rem;
+    width: calc(100% - 1.5rem);
   }
 
   .inputGroup {
@@ -162,6 +229,13 @@
 
   .recipeContainer {
     padding: 1.25rem;
+  }
+
+  /* mobile: use a percentage height so it fits available screen */
+  .chatContainer {
+    height: 50vh;
+    min-height: 260px;
+    max-height: 60vh;
   }
 
   .recipeContent {
@@ -192,6 +266,7 @@
   }
 
   .form {
-    padding: 1rem;
+    padding: 0.75rem;
+    width: calc(100% - 1rem);
   }
 }

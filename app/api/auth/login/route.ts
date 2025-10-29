@@ -5,10 +5,10 @@ import { getAllowedOrigin } from "@/lib/cors";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id } = body;
+    const { memberId } = body;
 
     // 입력값 검증
-    if (!id || typeof id !== "string") {
+    if (!memberId || typeof memberId !== "string") {
       const errorResponse = NextResponse.json(
         { message: "아이디를 입력해주세요." },
         { status: 400 }
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       return errorResponse;
     }
 
-    const trimmedId = id.trim();
+    const trimmedId = memberId.trim();
 
     // 사용자 존재 확인
     if (!MockUserData.hasUser(trimmedId)) {

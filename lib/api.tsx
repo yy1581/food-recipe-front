@@ -53,13 +53,11 @@ export const authAPI = {
       const axiosError = error as {
         response?: { data?: { message?: string }; status?: number };
       };
-      throw {
-        success: false,
-        message:
-          axiosError.response?.data?.message ||
-          "로그인 중 오류가 발생했습니다.",
-        status: axiosError.response?.status,
-      };
+      const msg =
+        axiosError.response?.data?.message || "로그인 중 오류가 발생했습니다.";
+      const err = new Error(msg);
+      (err as any).status = axiosError.response?.status;
+      throw err;
     }
   },
 

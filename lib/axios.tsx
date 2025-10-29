@@ -6,7 +6,7 @@ const getBaseURL = () => {
   if (process.env.NODE_ENV === "production") {
     return "http://localhost:8080"; // 상대 경로 사용 (현재 도메인)
   }
-  return "http://localhost:8080"; // 개발 환경
+  return "http://localhost:3000"; // 개발 환경
 };
 
 const instance = axios.create({

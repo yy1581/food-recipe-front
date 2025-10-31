@@ -55,9 +55,10 @@ export const authAPI = {
       };
       const msg =
         axiosError.response?.data?.message || "로그인 중 오류가 발생했습니다.";
-      const err = new Error(msg);
-      (err as any).status = axiosError.response?.status;
-      throw err;
+  const err = new Error(msg);
+  const errWithStatus = err as Error & { status?: number };
+  errWithStatus.status = axiosError.response?.status;
+  throw errWithStatus;
     }
   },
 

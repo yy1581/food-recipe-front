@@ -114,21 +114,21 @@ function RecipesContent() {
               )}
             </div>
           ))}
-          
-        </div>
-        
-        
-        
+          {error && (
+            <Error
+              message={error}
+              type="error"
+              dismissible
+              onDismiss={() => setError("")}
+            />
+          )}
+          {isLoading && (
+            <div className={styles.loadingContainer}>
+              <LoadingSpinner text="맛있는 레시피를 생성하고 있습니다..." />
+            </div>
+          )}
+        </div>        
       </div>      
-
-      {error && (
-        <Error
-          message={error}
-          type="error"
-          dismissible
-          onDismiss={() => setError("")}
-        />
-      )}
 
       <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
@@ -151,14 +151,6 @@ function RecipesContent() {
             </Button>
           </div>
         </form>
-
-      {isLoading && (
-          <div className={styles.loadingContainer}>
-            <LoadingSpinner text="맛있는 레시피를 생성하고 있습니다..." />
-          </div>
-        )}
-
-      
     </div>
   );
 }

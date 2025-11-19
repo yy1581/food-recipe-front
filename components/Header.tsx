@@ -73,8 +73,9 @@ export default function Header() {
           쿡비서
         </Link>
         <nav className={style.nav}>
-          <Link href="/recipes">레시피 생성</Link>
-          {isAuthenticated && <Link href="/my-recipes">나의 레시피</Link>}
+          <Link href="/recipes">생성</Link>
+          {isAuthenticated && <Link href="/my-recipes">히스토리</Link>}
+          {isAuthenticated && <Link href="/settings">설정</Link>}
         </nav>
         <div className={style.authLinks}>
           {isAuthenticated ? (

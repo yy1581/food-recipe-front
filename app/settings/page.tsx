@@ -11,13 +11,13 @@ import styles from "./page.module.css";
 // 사용자 설정 관련 타입
 export interface UserSettings {
   allergies: AllergyOption[];
-  difficulty: "easy" | "medium" | "hard";
+  vegan: boolean;
 }
 
 export default function SettingsPage() {
   const [userSettings, setUserSettings] = useState<UserSettings>({
     allergies: [],
-    difficulty: "easy",
+    vegan: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -40,7 +40,7 @@ export default function SettingsPage() {
         const settings = JSON.parse(savedSettings);
         setUserSettings({
           allergies: settings.allergies || [],
-          difficulty: settings.difficulty || "easy",
+          vegan: settings.vegan || false,
         });
       } catch (e) {
         console.error("설정 불러오기 실패:", e);
@@ -134,28 +134,23 @@ export default function SettingsPage() {
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>요리 난이도</h2>
-
-          <div className={styles.inputGroup}>
-            <label htmlFor="difficulty" className={styles.label}>
-              요리 난이도
-            </label>
-            <select
-              id="difficulty"
-              className={styles.select}
-              value={userSettings.difficulty}
+          <h2 className={styles.sectionTitle}>비건 설정</h2>
+          <p className={styles.sectionDescription}>
+            비건 레시피만 추천받고 싶다면 비건 모드를 활성화하세요.
+          </p>
+          <label className={styles.switch}>
+            <input
+              type="checkbox"
+              checked={userSettings.vegan}
               onChange={(e) =>
                 setUserSettings({
                   ...userSettings,
-                  difficulty: e.target.value as "easy" | "medium" | "hard",
+                  vegan: e.target.checked,
                 })
               }
-            >
-              <option value="easy">초급 (간단한 요리)</option>
-              <option value="medium">중급 (보통 난이도)</option>
-              <option value="hard">고급 (복잡한 요리)</option>
-            </select>
-          </div>
+            />
+            <span className={styles.slider}></span>
+          </label>
         </section>
 
         <div className={styles.buttonGroup}>

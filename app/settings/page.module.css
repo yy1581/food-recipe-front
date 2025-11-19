@@ -1,125 +1,171 @@
 .container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
+  min-height: calc(100vh - 80px);
 }
 
 .header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.title {
-  font-family: "NanumSquare", sans-serif;
+  font-size: 2.5rem;
   font-weight: 700;
-  font-size: 2rem;
-  color: #2d3748;
+  color: #1f2937;
   margin-bottom: 0.5rem;
-}
-
-.subtitle {
-  font-family: "NanumSquare", sans-serif;
-  font-weight: 400;
-  color: #718096;
-  margin: 0;
+  letter-spacing: -0.025em;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .section {
   background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.section:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  border-color: #d1d5db;
 }
 
 .sectionTitle {
-  font-family: "NanumSquare", sans-serif;
   font-weight: 600;
-  font-size: 1.2rem;
-  color: #2d3748;
-  margin-bottom: 1rem;
+  font-size: 1.375rem;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionTitle::before {
+  content: "";
+  width: 4px;
+  height: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
 }
 
 .sectionDescription {
-  font-family: "NanumSquare", sans-serif;
-  color: #718096;
-  margin-bottom: 1.5rem;
-}
-
-.inputGroup {
-  margin-bottom: 1.5rem;
-}
-
-.label {
-  font-family: "NanumSquare", sans-serif;
-  font-weight: 600;
-  color: #4a5568;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-.input,
-.select {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  font-family: "NanumSquare", sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  background: white;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-}
-
-.input:focus,
-.select:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.input::placeholder {
-  color: #a0aec0;
+  color: #6b7280;
+  margin: 0 0 1.5rem 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
 }
 
 /* 알레르기 그리드 */
 .allergyGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.75rem;
 }
 
 .allergyButton {
-  padding: 0.5rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  background: white;
-  font-family: "NanumSquare", sans-serif;
-  font-size: 0.9rem;
-  color: #4a5568;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 0.9375rem;
+  color: #374151;
   cursor: pointer;
   text-align: center;
   transition: all 0.2s ease;
   font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.allergyButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .allergyButton:hover {
-  border-color: #cbd5e0;
-  background: #f7fafc;
+  border-color: #9ca3af;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.allergyButton:hover::before {
+  opacity: 1;
 }
 
 .allergyButton.selected {
-  border-color: #babce1;
-  background: #b9bbe5;
+  border-color: #667eea;
+  background: #667eea;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.allergyButton.selected::before {
+  opacity: 0;
+}
+
+/* 토글 스위치 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-top: 0.5rem;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d1d5db;
+  transition: 0.3s;
+  border-radius: 34px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 0 12px rgba(102, 126, 234, 0.4);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px 2px rgba(102, 126, 234, 0.3);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
 
 /* 버튼 그룹 */
@@ -127,20 +173,68 @@
   display: flex;
   gap: 1rem;
   justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
+}
+
+.saveButton {
+  background: #667eea;
+  border: none;
+  min-width: 140px;
+}
+
+.saveButton:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .header {
+    font-size: 2rem;
+  }
+
+  .section {
+    padding: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .allergyGrid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.625rem;
+  }
+
+  .allergyButton {
+    padding: 0.75rem 0.625rem;
+    font-size: 0.875rem;
+  }
+
+  .buttonGroup {
+    flex-direction: column-reverse;
+  }
+
+  .buttonGroup button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem 0.75rem;
+  }
+
+  .header {
+    font-size: 1.75rem;
   }
 
   .allergyGrid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .buttonGroup {
-    flex-direction: column;
   }
 }

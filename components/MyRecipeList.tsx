@@ -2,6 +2,7 @@
 
 import Recipe from "@/types/recipe";
 import { useState } from "react";
+import ChatInterface, { Message } from "@/components/ChatInterface";
 import styles from "./MyRecipeList.module.css";
 
 interface MyRecipeListProps {
@@ -99,21 +100,27 @@ function MyRecipeListItem({ recipe, onDelete }: MyRecipeListItemProps) {
 }
 
 function RecipeDetail({ recipe }: { recipe: Recipe }) {
+  // 레시피를 메시지 형식으로 변환
+  const messages: Message[] = [
+    {
+      id: "user-question",
+      role: "user",
+      text: recipe.name,
+    },
+    ...recipe.description.map((step, index) => ({
+      id: `step-${index}`,
+      role: "assistant" as const,
+      text: step,
+    })),
+  ];
+
   return (
     <div className={styles.detailContainer}>
-      <div className={styles.recipeHeader}>
-        <h3 className={styles.recipeTitle}>{recipe.name}</h3>
-      </div>
-      <div className={styles.recipeSteps}>
-        <h4 className={styles.stepsTitle}>조리 과정</h4>
-        <ol className={styles.stepsList}>
-          {recipe.description.map((step, index) => (
-            <li key={index} className={styles.stepItem}>
-              {step}
-            </li>
-          ))}
-        </ol>
-      </div>
+      <ChatInterface
+        messages={messages}
+        showInput={false}
+        className={styles.chatInterface}
+      />
     </div>
   );
 }

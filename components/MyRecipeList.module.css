@@ -146,72 +146,20 @@
   top: 2rem;
   height: fit-content;
   max-height: 600px;
-  overflow-y: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .detailContainer {
-  padding: 2rem;
-}
-
-.recipeHeader {
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.recipeTitle {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0;
-}
-
-.recipeSteps {
-  margin-top: 1rem;
-}
-
-.stepsTitle {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #374151;
-  margin: 0 0 1rem 0;
-}
-
-.stepsList {
-  margin: 0;
-  padding-left: 1.5rem;
-  list-style: none;
-  counter-reset: step-counter;
-}
-
-.stepItem {
-  margin-bottom: 1rem;
-  padding-left: 0.5rem;
-  line-height: 1.6;
-  counter-increment: step-counter;
-  position: relative;
-  color: #374151;
-}
-
-.stepItem:before {
-  content: counter(step-counter);
-  position: absolute;
-  left: -1.5rem;
-  top: 0;
-  background: #3b82f6;
-  color: white;
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 50%;
+  flex: 1;
+  overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 600;
+  flex-direction: column;
 }
 
-.stepItem:last-child {
-  margin-bottom: 0;
+.chatInterface {
+  height: 100%;
 }
 
 /* 선택된 레시피가 없을 때 */
@@ -295,18 +243,18 @@
   }
 
   .detailContainer {
-    padding: 2rem;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chatInterface {
+    height: 100%;
   }
 
   .stepsList {
     padding-left: 1.25rem;
-  }
-
-  .stepItem:before {
-    width: 1rem;
-    height: 1rem;
-    left: -1.25rem;
-    font-size: 0.7rem;
   }
 
   .noSelection {
@@ -337,11 +285,14 @@
   }
 
   .detailContainer {
-    padding: 1.5rem;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
-  .recipeTitle {
-    font-size: 1.25rem;
+  .chatInterface {
+    height: 100%;
   }
 
   .stepItem {

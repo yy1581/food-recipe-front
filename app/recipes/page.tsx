@@ -40,13 +40,18 @@ function RecipesContent() {
         const steps = result.data.recipe || [];
         setRecipe(steps);
         
-        const assistantMessages: Message[] = steps.map((s, i) => ({
-          id: `${Date.now()}-${i}-${Math.random()}`,
-          role: "assistant",
-          text: s,
-        }));
+        // 모든 단계를 하나의 메시지로 합침
+        const recipeText = steps
+          .map((step, index) => `${index + 1}. ${step}`)
+          .join('\n\n');
         
-        setMessages((m) => [...m, ...assistantMessages]);
+        const assistantMessage: Message = {
+          id: `${Date.now()}-recipe`,
+          role: "assistant",
+          text: recipeText,
+        };
+        
+        setMessages((m) => [...m, assistantMessage]);
       } else {
         setError(result.message || "레시피 생성에 실패했습니다.");
       }

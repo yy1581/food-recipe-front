@@ -100,18 +100,21 @@ function MyRecipeListItem({ recipe, onDelete }: MyRecipeListItemProps) {
 }
 
 function RecipeDetail({ recipe }: { recipe: Recipe }) {
-  // 레시피를 메시지 형식으로 변환
+  const recipeText = recipe.description
+    .map((step, index) => `${index + 1}. ${step}`)
+    .join('\n\n');
+
   const messages: Message[] = [
     {
       id: "user-question",
       role: "user",
       text: recipe.name,
     },
-    ...recipe.description.map((step, index) => ({
-      id: `step-${index}`,
-      role: "assistant" as const,
-      text: step,
-    })),
+    {
+      id: "recipe-content",
+      role: "assistant",
+      text: recipeText,
+    },
   ];
 
   return (

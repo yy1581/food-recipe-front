@@ -61,8 +61,6 @@ export default function MyRecipesPage() {
   }
 
   return (
-    <div className={styles.container}>
-      <MyRecipeList recipes={recipes} onDeleteRecipe={handleDeleteRecipe} />
-    </div>
+    <MyRecipeList recipes={recipes} onDeleteRecipe={handleDeleteRecipe} />
   );
 }

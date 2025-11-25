@@ -32,9 +32,9 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
-        <h1 className={styles.title}>나만의 레시피</h1>
+        <h1 className={styles.title}>레시피 챗봇</h1>
         <p className={styles.subtitle}>
-          세상의 모든 레시피를 발견하고, 당신만의 특별한 레시피를 공유해보세요.
+          원하는 요리 카테고리를 선택하여 레시피를 찾아보세요!
         </p>
       </section>
       <CategoryCardList items={categoryItems} />

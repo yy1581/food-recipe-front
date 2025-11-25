@@ -16,11 +16,24 @@
 }
 
 .logo {
-  font-size: 1.375rem;
-  font-weight: 600;
-  color: #1f2937;
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  letter-spacing: -0.025em;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  transition: all 0.3s ease;
+  color: #1f2937;
+}
+
+.logo span {
+  color: #ff6347;
+  font-weight: 900;
+}
+
+.logo:hover {
+  transform: translateY(-2px);
+  opacity: 0.8;
 }
 
 .nav {

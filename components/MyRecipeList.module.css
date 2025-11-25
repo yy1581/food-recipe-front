@@ -1,7 +1,7 @@
 /* 컨테이너 스타일 */
 .container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 1rem auto;
   padding: 0;
 }
 
@@ -32,16 +32,33 @@
 /* 레시피 리스트 스타일 */
 .recipeList {
   background: white;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   max-height: 600px;
   overflow-y: auto;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+}
+
+.recipeList::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  z-index: 1;
+}
+
+.recipeList:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .recipeItem {
   padding: 0.75rem 1rem;
+  padding-left: calc(1rem + 4px);
   border-bottom: 1px solid #f3f4f6;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -49,8 +66,8 @@
 }
 
 .recipeItem:hover {
-  background: #f8fafc;
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  transform: translateX(2px);
 }
 
 .recipeItem:last-child {
@@ -58,8 +75,9 @@
 }
 
 .recipeItem.selected {
-  background: #eff6ff;
-  border-left: 4px solid #2563eb;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-left: 3px solid #667eea;
+  padding-left: calc(1rem + 1px);
 }
 
 /* 레시피 아이템 내용 */
@@ -95,9 +113,9 @@
   width: 32px;
   height: 32px;
   border: none;
-  border-radius: 6px;
-  background-color: transparent;
-  color: #6b7280;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+  color: white;
   cursor: pointer;
   transition: all 0.2s ease;
   opacity: 0;
@@ -106,15 +124,12 @@
 }
 
 .deleteButton:hover {
-  background-color: #fef2f2;
-  color: #dc2626;
-  transform: translateX(0);
-  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+  transform: translateX(0) translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(252, 129, 129, 0.3);
 }
 
 .deleteButton:active {
-  transform: translateX(0) scale(0.95);
-  background-color: #fecaca;
+  transform: translateX(0) translateY(0) scale(0.95);
 }
 
 .deleteIcon {
@@ -138,10 +153,10 @@
 /* 레시피 상세 정보 */
 .recipeDetail {
   background: white;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   padding: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
   position: sticky;
   top: 2rem;
   height: fit-content;
@@ -151,11 +166,8 @@
   flex-direction: column;
 }
 
-.detailContainer {
-  flex: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+.recipeDetail:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .chatInterface {

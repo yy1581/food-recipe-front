@@ -70,7 +70,7 @@ export default function Header() {
     <header className={style.header}>
       <div className={style.container}>
         <Link href="/" className={style.logo}>
-          쿡비서
+          <span>쿡</span>비서
         </Link>
         <nav className={style.nav}>
           <Link href="/recipes">생성</Link>

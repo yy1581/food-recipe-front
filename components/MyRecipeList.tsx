@@ -48,19 +48,19 @@ export default function MyRecipeList({ recipes, onDeleteRecipe }: MyRecipeListPr
           ))}
         </div>
 
-        <div className={styles.recipeDetail}>
-          {selectedRecipe ? (
-            <RecipeDetail recipe={selectedRecipe} />
-          ) : (
+        {selectedRecipe ? 
+            <RecipeDetail recipe={selectedRecipe} /> :
+          (
+          <div className={styles.recipeDetail}>
             <div className={styles.noSelection}>
               <div className={styles.placeholderIcon}>👈</div>
               <p className={styles.placeholderText}>
                 레시피를 선택하면 상세 내용이 표시됩니다
               </p>
             </div>
-          )}
+          </div>
+        )}
         </div>
-      </div>
     </div>
   );
 }
@@ -118,12 +118,10 @@ function RecipeDetail({ recipe }: { recipe: Recipe }) {
   ];
 
   return (
-    <div className={styles.detailContainer}>
       <ChatInterface
         messages={messages}
         showInput={false}
         className={styles.chatInterface}
       />
-    </div>
   );
 }

@@ -4,23 +4,21 @@ import ChatInterface, { Message } from "@/components/ChatInterface";
 import { LoadingSpinner } from "@/components/Spinner";
 import { recipeAPI } from "@/lib/api";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
+import { useState, Suspense } from "react";
 import styles from "./page.module.css";
 
 function RecipesContent() {
-  const [userInputMessage, setUserInputMessage] = useState("");
-  const [recipe, setRecipe] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
 
   const searchParams = useSearchParams();
+  const queryValue = searchParams.get("value") || "";
   const router = useRouter();
 
   const handleSubmit = async (message: string) => {
     setIsLoading(true);
     setError("");
-    setRecipe([]);
 
     const userMsg: Message = { 
       id: String(Date.now()) + Math.random(), 
@@ -38,9 +36,7 @@ function RecipesContent() {
 
       if (result.success && result.data) {
         const steps = result.data.recipe || [];
-        setRecipe(steps);
         
-        // 모든 단계를 하나의 메시지로 합침
         const recipeText = steps
           .map((step, index) => `${index + 1}. ${step}`)
           .join('\n\n');
@@ -63,13 +59,6 @@ function RecipesContent() {
     }
   };
 
-  useEffect(() => {
-    const urlQuery = searchParams.get("value");
-    if (urlQuery) {
-      setUserInputMessage(urlQuery);
-    }
-  }, [searchParams]);
-
   return (
     <div className={styles.container}>
       <ChatInterface
@@ -82,6 +71,7 @@ function RecipesContent() {
         inputPlaceholder="질문을 입력해 주세요"
         submitButtonText="생성"
         showInput={true}
+        inputValue={queryValue}
       />
     </div>
   );

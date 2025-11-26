@@ -1,4 +1,5 @@
 import axios from "./axios";
+import Recipe from "@/types/recipe";
 
 // API 응답 타입 정의
 export interface ApiResponse<T = unknown> {
@@ -104,12 +105,12 @@ export const authAPI = {
   },
 };
 
-// 레시피 API (추후 확장 가능)
+// 레시피 API
 export const recipeAPI = {
-  // 레시피 목록 조회
-  getRecipes: async (params?: { value?: string }): Promise<ApiResponse> => {
+  // 레시피 히스토리 조회
+  getRecipeHistory: async (): Promise<ApiResponse<Recipe[]>> => {
     try {
-      const response = await axios.get("/api/recipes", { params });
+      const response = await axios.get("/api/recipes/history");
       return response.data;
     } catch (error: unknown) {
       const axiosError = error as {
@@ -119,13 +120,32 @@ export const recipeAPI = {
         success: false,
         message:
           axiosError.response?.data?.message ||
-          "레시피 조회 중 오류가 발생했습니다.",
+          "레시피 히스토리 조회 중 오류가 발생했습니다.",
         status: axiosError.response?.status,
       };
     }
   },
 
-  // 레시피 생성
+  // 메시지 삭제
+  deleteMessage: async (messageId: string): Promise<ApiResponse> => {
+    try {
+      const response = await axios.delete(`/api/chats/${messageId}`);
+      return response.data;
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { data?: { message?: string }; status?: number };
+      };
+      throw {
+        success: false,
+        message:
+          axiosError.response?.data?.message ||
+          "메시지 삭제 중 오류가 발생했습니다.",
+        status: axiosError.response?.status,
+      };
+    }
+  },
+
+  // 레시피 생성 API
   generateRecipe: async (
     foodName: string
   ): Promise<ApiResponse<RecipeGenerateResponse>> => {
@@ -141,6 +161,31 @@ export const recipeAPI = {
         message:
           axiosError.response?.data?.message ||
           "레시피 생성 중 오류가 발생했습니다.",
+        status: axiosError.response?.status,
+      };
+    }
+  },
+
+  // 피드백 제출 API
+  submitFeedback: async (
+    messageId: string,
+    feedback: "like" | "dislike" | null
+  ): Promise<ApiResponse> => {
+    try {
+      const response = await axios.post("/api/chats/feedback", {
+        messageId,
+        feedback,
+      });
+      return response.data;
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { data?: { message?: string }; status?: number };
+      };
+      throw {
+        success: false,
+        message:
+          axiosError.response?.data?.message ||
+          "피드백 제출 중 오류가 발생했습니다.",
         status: axiosError.response?.status,
       };
     }

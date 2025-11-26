@@ -3,7 +3,7 @@
 import { Button } from "@/components/Button";
 import { LoadingSpinner } from "@/components/Spinner";
 import { Error } from "@/components/Error";
-import { authAPI } from "@/lib/api";
+import { authAPI, recipeAPI } from "@/lib/api";
 import { useEffect, useState, useRef } from "react";
 import styles from "./ChatInterface.module.css";
 
@@ -25,6 +25,7 @@ interface ChatInterfaceProps {
   submitButtonText?: string;
   showInput?: boolean;
   className?: string;
+  inputValue?: string;
 }
 
 export default function ChatInterface({
@@ -38,19 +39,32 @@ export default function ChatInterface({
   submitButtonText = "생성",
   showInput = true,
   className = "",
+  inputValue = "",
 }: ChatInterfaceProps) {
-  const [userInputMessage, setUserInputMessage] = useState("");
+  const [userInputMessage, setUserInputMessage] = useState(inputValue);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const chatRef = useRef<HTMLDivElement | null>(null);
 
-  const handleFeedback = (messageId: string, feedbackType: "like" | "dislike") => {
+  const handleFeedback = async (messageId: string, feedbackType: "like" | "dislike") => {
     if (onMessagesChange) {
+      const currentMessage = messages.find(msg => msg.id === messageId);
+      const newFeedback = currentMessage?.feedback === feedbackType ? null : feedbackType;
+      
       const updatedMessages = messages.map((msg) =>
         msg.id === messageId
-          ? { ...msg, feedback: msg.feedback === feedbackType ? null : feedbackType }
+          ? { ...msg, feedback: newFeedback }
           : msg
       );
       onMessagesChange(updatedMessages);
+
+      // 서버에 피드백 전송
+      try {
+        await recipeAPI.submitFeedback(messageId, newFeedback);
+      } catch (error) {
+        console.error("피드백 전송 실패:", error);
+        // 실패 시 UI 롤백
+        onMessagesChange(messages);
+      }
     }
   };
 
@@ -71,6 +85,12 @@ export default function ChatInterface({
       }
     }, 50);
   };
+
+  useEffect(() => {
+    if (inputValue) {
+      setUserInputMessage(inputValue);
+    }
+  }, [inputValue]);
 
   useEffect(() => {
     const updateUser = () => {

@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { authAPI } from "@/lib/api";
 import style from "./Header.module.css";
+import Image from "next/image";
 
 export default function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -70,7 +71,7 @@ export default function Header() {
     <header className={style.header}>
       <div className={style.container}>
         <Link href="/" className={style.logo}>
-          <span>쿡</span>비서
+          <Image src="/logo.png" alt="Logo" width={150} height={63} priority />
         </Link>
         <nav className={style.nav}>
           <Link href="/recipes">생성</Link>

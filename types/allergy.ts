@@ -1,13 +1,23 @@
 export const ALLERGY_OPTIONS = [
-  "땅콩",
-  "견과류",
+  "알류",
   "우유",
-  "달걀",
+  "메밀",
+  "땅콩",
   "대두",
   "밀",
-  "생선",
-  "갑각류",
+  "잣",
+  "호두",
+  "게",
+  "새우",
+  "오징어",
+  "고등어",
   "조개류",
+  "복숭아",
+  "토마토",
+  "닭고기",
+  "돼지고기",
+  "쇠고기",
+  "아황산류"
 ] as const;
 
 export type AllergyOption = (typeof ALLERGY_OPTIONS)[number];

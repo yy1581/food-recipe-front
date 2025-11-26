@@ -11,7 +11,7 @@ export type Message = {
   id: string;
   role: "user" | "assistant";
   text: string;
-  feedback?: "like" | "dislike" | null;
+  feedback?: "like" | null;
 };
 
 interface ChatInterfaceProps {
@@ -45,10 +45,10 @@ export default function ChatInterface({
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const chatRef = useRef<HTMLDivElement | null>(null);
 
-  const handleFeedback = async (messageId: string, feedbackType: "like" | "dislike") => {
+  const handleFeedback = async (messageId: string) => {
     if (onMessagesChange) {
       const currentMessage = messages.find(msg => msg.id === messageId);
-      const newFeedback = currentMessage?.feedback === feedbackType ? null : feedbackType;
+      const newFeedback: "like" | null = currentMessage?.feedback === "like" ? null : "like";
       
       const updatedMessages = messages.map((msg) =>
         msg.id === messageId
@@ -126,20 +126,11 @@ export default function ChatInterface({
                     <button
                       type="button"
                       className={`${styles.feedbackBtn} ${m.feedback === "like" ? styles.active : ""}`}
-                      onClick={() => handleFeedback(m.id, "like")}
+                      onClick={() => handleFeedback(m.id)}
                       title="좋아요"
                       aria-label="좋아요"
                     >
                       ❤️
-                    </button>
-                    <button
-                      type="button"
-                      className={`${styles.feedbackBtn} ${m.feedback === "dislike" ? styles.active : ""}`}
-                      onClick={() => handleFeedback(m.id, "dislike")}
-                      title="싫어요"
-                      aria-label="싫어요"
-                    >
-                      💔
                     </button>
                   </div>
                 )}

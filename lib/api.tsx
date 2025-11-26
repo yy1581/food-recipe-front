@@ -169,7 +169,7 @@ export const recipeAPI = {
   // 피드백 제출 API
   submitFeedback: async (
     messageId: string,
-    feedback: "like" | "dislike" | null
+    feedback: "like" | null
   ): Promise<ApiResponse> => {
     try {
       const response = await axios.post("/api/chats/feedback", {

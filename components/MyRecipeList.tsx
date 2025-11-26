@@ -1,7 +1,7 @@
 "use client";
 
 import Recipe from "@/types/recipe";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChatInterface, { Message } from "@/components/ChatInterface";
 import styles from "./MyRecipeList.module.css";
 
@@ -100,26 +100,31 @@ function MyRecipeListItem({ recipe, onDelete }: MyRecipeListItemProps) {
 }
 
 function RecipeDetail({ recipe }: { recipe: Recipe }) {
-  const recipeText = recipe.description
-    .map((step, index) => `${index + 1}. ${step}`)
-    .join('\n\n');
+  const [messages, setMessages] = useState<Message[]>([]);
 
-  const messages: Message[] = [
-    {
-      id: "user-question",
-      role: "user",
-      text: recipe.name,
-    },
-    {
-      id: "recipe-content",
-      role: "assistant",
-      text: recipeText,
-    },
-  ];
+  useEffect(() => {
+    const recipeText = recipe.description
+      .map((step, index) => `${index + 1}. ${step}`)
+      .join('\n\n');
+
+    setMessages([
+      {
+        id: "user-question",
+        role: "user",
+        text: recipe.name,
+      },
+      {
+        id: `recipe-${recipe.id}`,
+        role: "assistant",
+        text: recipeText,
+      },
+    ]);
+  }, [recipe]);
 
   return (
       <ChatInterface
         messages={messages}
+        onMessagesChange={setMessages}
         showInput={false}
         className={styles.chatInterface}
       />

@@ -43,6 +43,7 @@ export default function ChatInterface({
 }: ChatInterfaceProps) {
   const [userInputMessage, setUserInputMessage] = useState(inputValue);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const chatRef = useRef<HTMLDivElement | null>(null);
 
   const handleFeedback = async (messageId: string) => {
@@ -95,7 +96,9 @@ export default function ChatInterface({
   useEffect(() => {
     const updateUser = () => {
       const id = authAPI.getCurrentUserId();
+      const authenticated = authAPI.isAuthenticated();
       setCurrentUserId(id);
+      setIsAuthenticated(authenticated);
     };
 
     updateUser();
@@ -125,9 +128,10 @@ export default function ChatInterface({
                   <div className={styles.feedbackButtons}>
                     <button
                       type="button"
-                      className={`${styles.feedbackBtn} ${m.feedback === "like" ? styles.active : ""}`}
+                      className={`${styles.feedbackBtn} ${m.feedback === "like" ? styles.active : ""} ${!isAuthenticated ? styles.disabled : ""}`}
                       onClick={() => handleFeedback(m.id)}
-                      title="좋아요"
+                      disabled={!isAuthenticated}
+                      title={isAuthenticated ? "좋아요" : "로그인이 필요합니다"}
                       aria-label="좋아요"
                     >
                       ❤️

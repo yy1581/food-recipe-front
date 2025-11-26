@@ -169,6 +169,16 @@
   opacity: 0.3;
 }
 
+.feedbackBtn.disabled {
+  cursor: not-allowed;
+  opacity: 0.25;
+}
+
+.feedbackBtn.disabled:hover {
+  background: transparent;
+  transform: none;
+}
+
 .loadingContainer {
   padding: 2rem;
   text-align: center;

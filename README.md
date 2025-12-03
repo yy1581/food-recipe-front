@@ -1,36 +1,444 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# API 문서
 
-## Getting Started
+## 개요
+이 문서는 프론트엔드와 백엔드 간의 API 통신 명세를 정의합니다.
 
-First, run the development server:
+**Base URL**: `http://localhost:8080` (개발 환경)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**인증 방식**: Cookie 기반 (user-id)
+
+---
+
+## 인증 API
+
+### 1. 회원가입
+회원가입을 처리합니다.
+
+**Endpoint**: `POST /api/auth/signup`
+
+**Request Body**:
+```json
+{
+  "id": "string" // 사용자 ID (필수)
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Response**:
+```json
+{
+  "success": true,
+  "message": "회원가입이 완료되었습니다.",
+  "data": {
+    "userId": "string",
+    "createdAt": "2025-11-28T00:00:00.000Z"
+  }
+}
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Error Response**:
+```json
+{
+  "success": false,
+  "message": "이미 존재하는 사용자입니다."
+}
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Status Codes**:
+- `200`: 성공
+- `400`: 잘못된 요청
+- `409`: 이미 존재하는 사용자
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+### 2. 로그인
+로그인을 처리하고 인증 토큰을 발급합니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Endpoint**: `POST /api/auth/login`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Request Body**:
+```json
+{
+  "memberId": "string" // 사용자 ID (필수)
+}
+```
 
-## Deploy on Vercel
+**Response**:
+```json
+{
+  "success": true,
+  "message": "로그인 성공",
+  "data": {
+    "userId": "string"
+  }
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Set-Cookie**:
+- `user-id`: 사용자 ID
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Error Response**:
+```json
+{
+  "success": false,
+  "message": "존재하지 않는 사용자입니다."
+}
+```
+
+**Status Codes**:
+- `200`: 성공
+- `401`: 인증 실패
+- `404`: 사용자를 찾을 수 없음
+
+---
+
+## 레시피 API
+
+### 3. 레시피 생성 (채팅)
+사용자의 질문을 받아 AI가 레시피를 생성합니다.
+
+**Endpoint**: `POST /api/chats`
+
+**Headers**:
+```
+Cookie: user-id={userId}
+```
+
+**Request Body**:
+```json
+{
+  "question": "string" // 음식 이름 또는 질문 (필수)
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "레시피가 생성되었습니다.",
+  "data": {
+    "foodName": "김치찌개",
+    "recipe": [
+      "김치를 적당한 크기로 썰어 준비합니다.",
+      "돼지고기를 한입 크기로 자릅니다.",
+      "팬에 기름을 두르고 김치를 볶습니다.",
+      "고기를 넣고 함께 볶아줍니다.",
+      "물을 붓고 끓어오르면 두부와 파를 넣습니다.",
+      "간을 맞춰 완성합니다."
+    ],
+    "generatedAt": "2025-11-28T00:00:00.000Z"
+  }
+}
+```
+
+**Error Response**:
+```json
+{
+  "success": false,
+  "message": "레시피 생성 중 오류가 발생했습니다."
+}
+```
+
+**Status Codes**:
+- `200`: 성공
+- `400`: 잘못된 요청
+- `401`: 인증 필요
+- `500`: 서버 오류
+
+---
+
+### 4. 레시피 히스토리 조회
+사용자가 생성한 레시피 목록을 조회합니다.
+
+**Endpoint**: `GET /api/recipes/history`
+
+**Headers**:
+```
+Cookie: user-id={userId}
+```
+
+**Query Parameters**: 없음
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "레시피 히스토리를 성공적으로 조회했습니다.",
+  "data": [
+    {
+      "id": 1,
+      "name": "김치찌개",
+      "description": [
+        "김치를 적당한 크기로 썰어 준비합니다.",
+        "돼지고기를 한입 크기로 자릅니다.",
+        "팬에 기름을 두르고 김치를 볶습니다.",
+        "고기를 넣고 함께 볶아줍니다.",
+        "물을 붓고 끓어오르면 두부와 파를 넣습니다.",
+        "간을 맞춰 완성합니다."
+      ],
+      "createdAt": "2025-11-28T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "된장찌개",
+      "description": [
+        "멸치와 다시마로 육수를 우려냅니다.",
+        "된장을 체에 걸러 육수에 풉니다.",
+        "두부, 감자, 양파를 썰어 넣습니다.",
+        "호박과 버섯을 추가합니다.",
+        "끓어오르면 파를 넣고 마무리합니다."
+      ],
+      "createdAt": "2025-11-27T00:00:00.000Z"
+    }
+  ]
+}
+```
+
+**Error Response**:
+```json
+{
+  "success": false,
+  "message": "레시피 히스토리 조회 중 오류가 발생했습니다."
+}
+```
+
+**Status Codes**:
+- `200`: 성공
+- `401`: 인증 필요
+- `500`: 서버 오류
+
+---
+
+### 5. 메시지 삭제
+특정 채팅 메시지(레시피)를 삭제합니다.
+
+**Endpoint**: `DELETE /api/chats/{messageId}`
+
+**Headers**:
+```
+Cookie: user-id={userId}
+```
+
+**Path Parameters**:
+- `messageId` (string): 삭제할 메시지 ID
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "메시지가 성공적으로 삭제되었습니다.",
+  "data": {
+    "messageId": "1"
+  }
+}
+```
+
+**Error Response**:
+```json
+{
+  "success": false,
+  "message": "메시지 삭제 중 오류가 발생했습니다."
+}
+```
+
+**Status Codes**:
+- `200`: 성공
+- `400`: 잘못된 요청
+- `401`: 인증 필요
+- `404`: 메시지를 찾을 수 없음
+- `500`: 서버 오류
+
+---
+
+### 6. 피드백 제출
+레시피에 대한 좋아요 피드백을 제출합니다.
+
+**Endpoint**: `POST /api/chats/feedback`
+
+**Headers**:
+```
+Cookie: user-id={userId}
+```
+
+**Request Body**:
+```json
+{
+  "messageId": "string", // 메시지 ID (필수)
+  "feedback": "like" // "like" 또는 null (필수)
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "피드백이 성공적으로 전송되었습니다.",
+  "data": {
+    "messageId": "1",
+    "feedback": "like"
+  }
+}
+```
+
+**Error Response**:
+```json
+{
+  "success": false,
+  "message": "피드백 제출 중 오류가 발생했습니다."
+}
+```
+
+**Status Codes**:
+- `200`: 성공
+- `400`: 잘못된 요청
+- `401`: 인증 필요
+- `500`: 서버 오류
+
+---
+
+## 데이터 타입
+
+### Recipe
+```typescript
+interface Recipe {
+  id: number;
+  name: string;
+  description: string[]; // 조리 단계 배열
+  createdAt?: string; // ISO 8601 날짜 형식
+}
+```
+
+### ApiResponse
+```typescript
+interface ApiResponse<T = unknown> {
+  success: boolean;
+  message: string;
+  data?: T;
+  status?: number;
+}
+```
+
+---
+
+## 에러 코드
+
+| 코드 | 설명 |
+|------|------|
+| 400 | Bad Request - 잘못된 요청 |
+| 401 | Unauthorized - 인증 필요 |
+| 403 | Forbidden - 권한 없음 |
+| 404 | Not Found - 리소스를 찾을 수 없음 |
+| 409 | Conflict - 중복된 리소스 |
+| 500 | Internal Server Error - 서버 오류 |
+
+---
+
+## 인증 흐름
+
+1. **회원가입/로그인**:
+   - 프론트엔드가 `/api/auth/login` 또는 `/api/auth/signup`로 요청
+   - 백엔드가 `user-id` 쿠키 설정
+   - 프론트엔드가 쿠키를 자동으로 저장
+
+2. **인증된 요청**:
+   - 모든 요청에 쿠키가 자동으로 포함됨 (`withCredentials: true`)
+   - 백엔드가 `user-id` 쿠키를 검증
+   - 유효하지 않으면 401 에러 반환
+
+3. **로그아웃**:
+   - 프론트엔드에서 쿠키 삭제
+   - 백엔드 세션 무효화 (선택사항)
+
+---
+
+## CORS 설정
+
+백엔드에서 다음 CORS 설정이 필요합니다:
+
+```javascript
+// Express 예시
+app.use(cors({
+  origin: 'http://localhost:3000', // 프론트엔드 URL
+  credentials: true, // 쿠키 허용
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
+```
+
+---
+
+## 환경 변수
+
+프론트엔드 `.env.local`:
+```
+NEXT_PUBLIC_API_URL=http://localhost:8080
+```
+
+백엔드:
+```
+PORT=8080
+CORS_ORIGIN=http://localhost:3000
+```
+
+---
+
+## 테스트 시나리오
+
+### 1. 회원가입 및 로그인
+```bash
+# 회원가입
+curl -X POST http://localhost:8080/api/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{"id": "testuser"}'
+
+# 로그인
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"memberId": "testuser"}' \
+  -c cookies.txt
+```
+
+### 2. 레시피 생성
+```bash
+curl -X POST http://localhost:8080/api/chats \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{"question": "김치찌개"}'
+```
+
+### 3. 레시피 히스토리 조회
+```bash
+curl -X GET http://localhost:8080/api/recipes/history \
+  -b cookies.txt
+```
+
+### 4. 피드백 제출
+```bash
+curl -X POST http://localhost:8080/api/chats/feedback \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{"messageId": "1", "feedback": "like"}'
+```
+
+### 5. 메시지 삭제
+```bash
+curl -X DELETE http://localhost:8080/api/chats/1 \
+  -b cookies.txt
+```
+
+---
+
+## 주의사항
+
+1. **쿠키 기반 인증**: 모든 요청에 `withCredentials: true` 설정 필요
+2. **CORS**: 백엔드에서 `credentials: true` 설정 필요
+3. **타임아웃**: 요청 타임아웃은 10초로 설정됨
+4. **에러 처리**: 모든 에러는 `ApiResponse` 형식으로 반환됨
+5. **날짜 형식**: ISO 8601 형식 사용 (`YYYY-MM-DDTHH:mm:ss.sssZ`)
+
+---
+
+## 변경 이력
+
+| 날짜 | 버전 | 변경 내용 |
+|------|------|----------|
+| 2025-11-28 | 1.0.0 | 초기 문서 작성 |

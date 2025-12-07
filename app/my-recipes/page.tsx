@@ -20,7 +20,7 @@ export default function MyRecipesPage() {
     try {
       await recipeAPI.deleteMessage(String(recipeId));
       setRecipes((prevRecipes) =>
-        prevRecipes.filter((recipe) => recipe.id !== recipeId)
+        prevRecipes.filter((recipe) => recipe.recipeId !== recipeId)
       );
     } catch (error) {
       console.error("메시지 삭제 실패:", error);
@@ -42,10 +42,10 @@ export default function MyRecipesPage() {
       
       try {
         const response = await recipeAPI.getRecipeHistory();
-        if (response.success && response.data) {
-          setRecipes(response.data);
+        if (response) {
+          setRecipes(response);
         } else {
-          setError(response.message || "레시피를 불러올 수 없습니다.");
+          setError("레시피를 불러올 수 없습니다.");
         }
       } catch (e) {
         console.error("레시피 히스토리 불러오기 실패:", e);

@@ -108,7 +108,7 @@ export const authAPI = {
 // 레시피 API
 export const recipeAPI = {
   // 레시피 히스토리 조회
-  getRecipeHistory: async (): Promise<ApiResponse<Recipe[]>> => {
+  getRecipeHistory: async (): Promise<Recipe[]> => {
     try {
       const response = await axios.get("/api/chats/history");
       return response.data;

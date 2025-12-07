@@ -37,9 +37,9 @@ export default function MyRecipeList({ recipes, onDeleteRecipe }: MyRecipeListPr
         <div className={styles.recipeList}>
           {recipes.map((recipe, index) => (
             <div
-              key={recipe.id || index}
+              key={recipe.recipeId || index}
               className={`${styles.recipeItem} ${
-                selectedRecipe?.id === recipe.id ? styles.selected : ""
+                selectedRecipe?.recipeId === recipe.recipeId ? styles.selected : ""
               }`}
               onClick={() => handleClick(recipe)}
             >
@@ -74,7 +74,7 @@ function MyRecipeListItem({ recipe, onDelete }: MyRecipeListItemProps) {
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation(); // 아이템 클릭 이벤트 방지
     if (confirm(`"${recipe.query}" 레시피를 삭제하시겠습니까?`)) {
-      onDelete?.(recipe.id);
+      onDelete?.(recipe.recipeId);
       // 벡엔드에 삭제 요청 보내기
     }
   }
@@ -105,14 +105,14 @@ function RecipeDetail({ recipe }: { recipe: Recipe }) {
   useEffect(() => {
     setMessages([
       {
-        id: "user-question",
+        id: 11,
         role: "user",
         text: recipe.query,
       },
       {
-        id: `recipe-${recipe.id}`,
+        id: 11,
         role: "assistant",
-        text: recipe.description,
+        text: recipe.recipe,
       },
     ]);
   }, [recipe]);

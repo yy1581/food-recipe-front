@@ -1,5 +1,5 @@
 export default interface Recipe {
-  id: number;
+  recipeId: number;
   query: string;
-  description: string;
+  recipe: string;
 }

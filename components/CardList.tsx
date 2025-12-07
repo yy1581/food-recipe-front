@@ -88,6 +88,7 @@ function CardItem({
           src={imageUrl || ""}
           width={200}
           height={200}
+          unoptimized
         />
       </div>
       <p className={styles.cardValue}>{value}</p>

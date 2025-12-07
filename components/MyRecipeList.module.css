@@ -35,7 +35,7 @@
   border-radius: 16px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  max-height: 600px;
+  max-height: 500px;
   overflow-y: auto;
   transition: box-shadow 0.3s ease;
   position: relative;
@@ -159,8 +159,7 @@
   transition: box-shadow 0.3s ease;
   position: sticky;
   top: 2rem;
-  height: fit-content;
-  max-height: 600px;
+  height: 500px;
   overflow: hidden;
   display: flex;
   flex-direction: column;

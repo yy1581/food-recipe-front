@@ -34,8 +34,9 @@ function RecipesContent() {
     try {
       const result = await recipeAPI.generateRecipe(message);
 
-      if (result.success && result.data) {
-        const recipeText = result.data.recipe || "";
+      // 응답이 직접 query와 recipe를 포함
+      if (result && result.recipe) {
+        const recipeText = result.recipe || "";
         
         const assistantMessage: Message = {
           id: `${Date.now()}-recipe`,
@@ -45,7 +46,7 @@ function RecipesContent() {
         
         setMessages((m) => [...m, assistantMessage]);
       } else {
-        setError(result.message || "레시피 생성에 실패했습니다.");
+        setError("레시피 생성에 실패했습니다.");
       }
     } catch (err) {
       console.error("레시피 생성 실패:", err);

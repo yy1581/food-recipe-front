@@ -32,13 +32,8 @@ export async function POST(request: NextRequest) {
 
     const response = NextResponse.json(
       {
-        success: true,
-        message: "레시피가 생성되었습니다.",
-        data: {
-          query: trimmedQuery,
-          recipe: mockRecipe,
-          generatedAt: new Date().toISOString(),
-        },
+        query: trimmedQuery,
+        recipe: mockRecipe,
       },
       { status: 200 }
     );

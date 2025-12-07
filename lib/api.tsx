@@ -13,7 +13,6 @@ export interface ApiResponse<T = unknown> {
 export interface RecipeGenerateResponse {
   query: string;
   recipe: string;
-  generatedAt: string;
 }
 
 // 쿠키 유틸리티 함수들
@@ -148,7 +147,7 @@ export const recipeAPI = {
   // 레시피 생성 API
   generateRecipe: async (
     foodName: string
-  ): Promise<ApiResponse<RecipeGenerateResponse>> => {
+  ): Promise<RecipeGenerateResponse> => {
     try {
       // 로컬스토리지에서 설정 가져오기
       let allergies: string[] = [];
@@ -173,13 +172,10 @@ export const recipeAPI = {
       const axiosError = error as {
         response?: { data?: { message?: string }; status?: number };
       };
-      throw {
-        success: false,
-        message:
-          axiosError.response?.data?.message ||
-          "레시피 생성 중 오류가 발생했습니다.",
-        status: axiosError.response?.status,
-      };
+      throw new Error(
+        axiosError.response?.data?.message ||
+        "레시피 생성 중 오류가 발생했습니다."
+      );
     }
   },
 

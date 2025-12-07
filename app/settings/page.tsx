@@ -11,13 +11,13 @@ import styles from "./page.module.css";
 // 사용자 설정 관련 타입
 export interface UserSettings {
   allergies: AllergyOption[];
-  vegan: boolean;
+  isVegan: boolean;
 }
 
 export default function SettingsPage() {
   const [userSettings, setUserSettings] = useState<UserSettings>({
     allergies: [],
-    vegan: false,
+    isVegan: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -40,7 +40,7 @@ export default function SettingsPage() {
         const settings = JSON.parse(savedSettings);
         setUserSettings({
           allergies: settings.allergies || [],
-          vegan: settings.vegan || false,
+          isVegan: settings.isVegan || false,
         });
       } catch (e) {
         console.error("설정 불러오기 실패:", e);
@@ -141,11 +141,11 @@ export default function SettingsPage() {
           <label className={styles.switch}>
             <input
               type="checkbox"
-              checked={userSettings.vegan}
+              checked={userSettings.isVegan}
               onChange={(e) =>
                 setUserSettings({
                   ...userSettings,
-                  vegan: e.target.checked,
+                  isVegan: e.target.checked,
                 })
               }
             />

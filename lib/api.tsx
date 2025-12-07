@@ -159,7 +159,7 @@ export const recipeAPI = {
         if (settings) {
           const parsed = JSON.parse(settings);
           allergies = parsed.allergies || [];
-          isVegan = parsed.isVegan || false;
+          isVegan = parsed.isVegan || false; // 'isVegan' 필드로 변경
         }
       }
       

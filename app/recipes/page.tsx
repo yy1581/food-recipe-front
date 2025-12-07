@@ -21,7 +21,7 @@ function RecipesContent() {
     setError("");
 
     const userMsg: Message = { 
-      id: String(Date.now()) + Math.random(), 
+      id: 11,
       role: "user", 
       text: message 
     };
@@ -39,7 +39,7 @@ function RecipesContent() {
         const recipeText = result.recipe || "";
         
         const assistantMessage: Message = {
-          id: `${Date.now()}-recipe`,
+          id: result.recipeId,
           role: "assistant",
           text: recipeText,
         };

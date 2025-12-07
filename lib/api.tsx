@@ -11,6 +11,7 @@ export interface ApiResponse<T = unknown> {
 
 // 레시피 생성 응답 타입 추가
 export interface RecipeGenerateResponse {
+  recipeId: number;
   query: string;
   recipe: string;
 }
@@ -181,7 +182,7 @@ export const recipeAPI = {
 
   // 피드백 제출 API
   submitFeedback: async (
-    recipeId: string
+    recipeId: number
   ): Promise<ApiResponse> => {
     try {
       const response = await axios.post("/api/chats/feedback", {

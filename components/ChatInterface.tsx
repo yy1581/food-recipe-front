@@ -8,7 +8,7 @@ import { useEffect, useState, useRef } from "react";
 import styles from "./ChatInterface.module.css";
 
 export type Message = {
-  id: string;
+  id: number;
   role: "user" | "assistant";
   text: string;
   feedback?: "like" | null;
@@ -46,7 +46,7 @@ export default function ChatInterface({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const chatRef = useRef<HTMLDivElement | null>(null);
 
-  const handleFeedback = async (messageId: string) => {
+  const handleFeedback = async (messageId: number) => {
     if (!isAuthenticated) return;
     
     // UI 먼저 업데이트

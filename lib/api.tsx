@@ -181,13 +181,11 @@ export const recipeAPI = {
 
   // 피드백 제출 API
   submitFeedback: async (
-    messageId: string,
-    feedback: "like" | null
+    recipeId: string
   ): Promise<ApiResponse> => {
     try {
       const response = await axios.post("/api/chats/feedback", {
-        messageId,
-        feedback,
+        recipeId,
       });
       return response.data;
     } catch (error: unknown) {

@@ -6,11 +6,11 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { messageId, feedback } = body;
+    const { recipeId } = body;
 
-    if (!messageId) {
+    if (!recipeId) {
       return NextResponse.json(
-        { success: false, message: "메시지 ID가 필요합니다." },
+        { success: false, message: "레시피 ID가 필요합니다." },
         { status: 400 }
       );
     }
@@ -20,13 +20,13 @@ export async function POST(request: NextRequest) {
     const userId = request.cookies.get("user-id")?.value;
 
     // 현재는 모크 응답 (실제 백엔드 연결 시 주석 해제)
-    console.log("피드백 수신:", { messageId, feedback, userId });
+    console.log("피드백 수신:", { recipeId, userId });
 
     // 임시 성공 응답
     return NextResponse.json({
       success: true,
       message: "피드백이 성공적으로 전송되었습니다.",
-      data: { messageId, feedback },
+      data: { recipeId },
     });
 
     /* 실제 백엔드 연결 시 사용
@@ -41,8 +41,7 @@ export async function POST(request: NextRequest) {
     const response = await axios.post(
       `${API_URL}/api/chats/feedback`,
       {
-        messageId,
-        feedback,
+        recipeId,
       },
       {
         headers: {

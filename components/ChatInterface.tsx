@@ -47,6 +47,9 @@ export default function ChatInterface({
   const chatRef = useRef<HTMLDivElement | null>(null);
 
   const handleFeedback = async (messageId: string) => {
+    if (!isAuthenticated) return;
+    
+    // UI 먼저 업데이트
     if (onMessagesChange) {
       const currentMessage = messages.find(msg => msg.id === messageId);
       const newFeedback: "like" | null = currentMessage?.feedback === "like" ? null : "like";
@@ -57,13 +60,16 @@ export default function ChatInterface({
           : msg
       );
       onMessagesChange(updatedMessages);
-
-      // 서버에 피드백 전송
-      try {
-        await recipeAPI.submitFeedback(messageId, newFeedback);
-      } catch (error) {
-        console.error("피드백 전송 실패:", error);
-        // 실패 시 UI 롤백
+    }
+    
+    // 서버에 피드백 전송
+    try {
+      await recipeAPI.submitFeedback(messageId);
+      console.log("피드백 전송 성공");
+    } catch (error) {
+      console.error("피드백 전송 실패:", error);
+      // 실패 시 UI 롤백
+      if (onMessagesChange) {
         onMessagesChange(messages);
       }
     }

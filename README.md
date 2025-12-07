@@ -239,8 +239,7 @@ Cookie: user-id={userId}
 **Request Body**:
 ```json
 {
-  "messageId": "string", // 메시지 ID (필수)
-  "feedback": "like" // "like" 또는 null (필수)
+  "recipeId": "string" // 레시피 ID (필수)
 }
 ```
 
@@ -250,8 +249,7 @@ Cookie: user-id={userId}
   "success": true,
   "message": "피드백이 성공적으로 전송되었습니다.",
   "data": {
-    "messageId": "1",
-    "feedback": "like"
+    "recipeId": "1"
   }
 }
 ```
@@ -393,7 +391,7 @@ curl -X GET http://localhost:8080/api/chats/history \
 curl -X POST http://localhost:8080/api/chats/feedback \
   -H "Content-Type: application/json" \
   -b cookies.txt \
-  -d '{"messageId": "1", "feedback": "like"}'
+  -d '{"recipeId": "1"}'
 ```
 
 ### 5. 메시지 삭제

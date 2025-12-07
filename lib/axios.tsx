@@ -10,7 +10,7 @@ const getBaseURL = () => {
 };
 
 const instance = axios.create({
-  baseURL: "",
+  baseURL: "http://localhost:8080", // ✅ 스프링 서버 주소
   headers: {
     "Content-Type": "application/json",
   },

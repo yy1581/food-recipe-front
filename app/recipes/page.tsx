@@ -35,11 +35,7 @@ function RecipesContent() {
       const result = await recipeAPI.generateRecipe(message);
 
       if (result.success && result.data) {
-        const steps = result.data.recipe || [];
-        
-        const recipeText = steps
-          .map((step, index) => `${index + 1}. ${step}`)
-          .join('\n\n');
+        const recipeText = result.data.recipe || "";
         
         const assistantMessage: Message = {
           id: `${Date.now()}-recipe`,

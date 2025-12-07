@@ -73,7 +73,7 @@ interface MyRecipeListItemProps {
 function MyRecipeListItem({ recipe, onDelete }: MyRecipeListItemProps) {
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation(); // 아이템 클릭 이벤트 방지
-    if (confirm(`"${recipe.name}" 레시피를 삭제하시겠습니까?`)) {
+    if (confirm(`"${recipe.query}" 레시피를 삭제하시겠습니까?`)) {
       onDelete?.(recipe.id);
       // 벡엔드에 삭제 요청 보내기
     }
@@ -82,7 +82,7 @@ function MyRecipeListItem({ recipe, onDelete }: MyRecipeListItemProps) {
   return (
     <div className={styles.itemContent}>
       <div className={styles.itemInfo}>
-        <h3 className={styles.itemTitle}>{recipe.name}</h3>
+        <h3 className={styles.itemTitle}>{recipe.query}</h3>
       </div>
       <button className={styles.deleteButton} onClick={handleDelete} title="레시피 삭제">
         <svg 
@@ -103,20 +103,16 @@ function RecipeDetail({ recipe }: { recipe: Recipe }) {
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    const recipeText = recipe.description
-      .map((step, index) => `${index + 1}. ${step}`)
-      .join('\n\n');
-
     setMessages([
       {
         id: "user-question",
         role: "user",
-        text: recipe.name,
+        text: recipe.query,
       },
       {
         id: `recipe-${recipe.id}`,
         role: "assistant",
-        text: recipeText,
+        text: recipe.description,
       },
     ]);
   }, [recipe]);

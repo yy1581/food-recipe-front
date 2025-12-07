@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     }
 
     // 백엔드 서버에서 레시피 히스토리 조회
-    const response = await axios.get(`${API_URL}/api/recipes/history`, {
+    const response = await axios.get(`${API_URL}/api/chats/history`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

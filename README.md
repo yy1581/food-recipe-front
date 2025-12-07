@@ -106,7 +106,9 @@ Cookie: user-id={userId}
 **Request Body**:
 ```json
 {
-  "question": "string" // 음식 이름 또는 질문 (필수)
+  "query": "string", // 음식 이름 또는 질문 (필수)
+  "allergies": ["string"], // 알레르기 목록 (선택)
+  "isVegan": false // 비건 여부 (선택, 기본값: false)
 }
 ```
 
@@ -116,15 +118,8 @@ Cookie: user-id={userId}
   "success": true,
   "message": "레시피가 생성되었습니다.",
   "data": {
-    "foodName": "김치찌개",
-    "recipe": [
-      "김치를 적당한 크기로 썰어 준비합니다.",
-      "돼지고기를 한입 크기로 자릅니다.",
-      "팬에 기름을 두르고 김치를 볶습니다.",
-      "고기를 넣고 함께 볶아줍니다.",
-      "물을 붓고 끓어오르면 두부와 파를 넣습니다.",
-      "간을 맞춰 완성합니다."
-    ],
+    "query": "김치찌개",
+    "recipe": "1. 김치를 적당한 크기로 썰어 준비합니다.\n\n2. 돼지고기를 한입 크기로 자릅니다.\n\n3. 팬에 기름을 두르고 김치를 볶습니다.\n\n4. 고기를 넣고 함께 볶아줍니다.\n\n5. 물을 붓고 끓어오르면 두부와 파를 넣습니다.\n\n6. 간을 맞춰 완성합니다.",
     "generatedAt": "2025-11-28T00:00:00.000Z"
   }
 }
@@ -149,7 +144,7 @@ Cookie: user-id={userId}
 ### 4. 레시피 히스토리 조회
 사용자가 생성한 레시피 목록을 조회합니다.
 
-**Endpoint**: `GET /api/recipes/history`
+**Endpoint**: `GET /api/chats/history`
 
 **Headers**:
 ```
@@ -166,27 +161,14 @@ Cookie: user-id={userId}
   "data": [
     {
       "id": 1,
-      "name": "김치찌개",
-      "description": [
-        "김치를 적당한 크기로 썰어 준비합니다.",
-        "돼지고기를 한입 크기로 자릅니다.",
-        "팬에 기름을 두르고 김치를 볶습니다.",
-        "고기를 넣고 함께 볶아줍니다.",
-        "물을 붓고 끓어오르면 두부와 파를 넣습니다.",
-        "간을 맞춰 완성합니다."
-      ],
+      "query": "김치찌개",
+      "description": "1. 김치를 적당한 크기로 썰어 준비합니다.\n\n2. 돼지고기를 한입 크기로 자릅니다.\n\n3. 팬에 기름을 두르고 김치를 볶습니다.\n\n4. 고기를 넣고 함께 볶아줍니다.\n\n5. 물을 붓고 끓어오르면 두부와 파를 넣습니다.\n\n6. 간을 맞춰 완성합니다.",
       "createdAt": "2025-11-28T00:00:00.000Z"
     },
     {
       "id": 2,
-      "name": "된장찌개",
-      "description": [
-        "멸치와 다시마로 육수를 우려냅니다.",
-        "된장을 체에 걸러 육수에 풉니다.",
-        "두부, 감자, 양파를 썰어 넣습니다.",
-        "호박과 버섯을 추가합니다.",
-        "끓어오르면 파를 넣고 마무리합니다."
-      ],
+      "query": "된장찌개",
+      "description": "1. 멸치와 다시마로 육수를 우려냅니다.\n\n2. 된장을 체에 걸러 육수에 풉니다.\n\n3. 두부, 감자, 양파를 썰어 넣습니다.\n\n4. 호박과 버섯을 추가합니다.\n\n5. 끓어오르면 파를 넣고 마무리합니다.",
       "createdAt": "2025-11-27T00:00:00.000Z"
     }
   ]
@@ -301,8 +283,8 @@ Cookie: user-id={userId}
 ```typescript
 interface Recipe {
   id: number;
-  name: string;
-  description: string[]; // 조리 단계 배열
+  query: string;
+  description: string; // 조리 단계 (번호 매김된 문자열)
   createdAt?: string; // ISO 8601 날짜 형식
 }
 ```
@@ -402,12 +384,12 @@ curl -X POST http://localhost:8080/api/auth/login \
 curl -X POST http://localhost:8080/api/chats \
   -H "Content-Type: application/json" \
   -b cookies.txt \
-  -d '{"question": "김치찌개"}'
+  -d '{"query": "김치찌개", "allergies": ["갑각류"], "isVegan": false}'
 ```
 
 ### 3. 레시피 히스토리 조회
 ```bash
-curl -X GET http://localhost:8080/api/recipes/history \
+curl -X GET http://localhost:8080/api/chats/history \
   -b cookies.txt
 ```
 
@@ -434,6 +416,48 @@ curl -X DELETE http://localhost:8080/api/chats/1 \
 3. **타임아웃**: 요청 타임아웃은 10초로 설정됨
 4. **에러 처리**: 모든 에러는 `ApiResponse` 형식으로 반환됨
 5. **날짜 형식**: ISO 8601 형식 사용 (`YYYY-MM-DDTHH:mm:ss.sssZ`)
+6. **알레르기 옵션**: 아래 목록 중 선택 가능
+
+### 지원 알레르기 목록
+프론트엔드에서 사용자가 선택할 수 있는 알레르기 옵션:
+
+```typescript
+[
+  "알류",
+  "우유",
+  "메밀",
+  "땅콩",
+  "대두",
+  "밀",
+  "잣",
+  "호두",
+  "게",
+  "새우",
+  "오징어",
+  "고등어",
+  "조개류",
+  "복숭아",
+  "토마토",
+  "닭고기",
+  "돼지고기",
+  "쇠고기",
+  "아황산류"
+]
+```
+
+**사용 예시**:
+```json
+{
+  "query": "김치찌개",
+  "allergies": ["돼지고기", "새우"],
+  "isVegan": false
+}
+```
+
+**참고**: 
+- `allergies` 필드는 위 목록에 있는 문자열의 배열로 전송됩니다
+- 선택하지 않은 경우 빈 배열 `[]`로 전송됩니다
+- 프론트엔드는 로컬스토리지의 `userSettings`에서 설정을 읽어 자동으로 포함합니다
 
 ---
 
@@ -441,4 +465,5 @@ curl -X DELETE http://localhost:8080/api/chats/1 \
 
 | 날짜 | 버전 | 변경 내용 |
 |------|------|----------|
+| 2025-12-07 | 1.1.0 | Recipe 타입 변경 (name → query, description: string[] → string), 알레르기/비건 정보 추가, 히스토리 API 엔드포인트 변경 (recipes → chats) |
 | 2025-11-28 | 1.0.0 | 초기 문서 작성 |

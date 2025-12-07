@@ -11,8 +11,8 @@ export interface ApiResponse<T = unknown> {
 
 // 레시피 생성 응답 타입 추가
 export interface RecipeGenerateResponse {
-  foodName: string;
-  recipe: string[];
+  query: string;
+  recipe: string;
   generatedAt: string;
 }
 
@@ -110,7 +110,7 @@ export const recipeAPI = {
   // 레시피 히스토리 조회
   getRecipeHistory: async (): Promise<ApiResponse<Recipe[]>> => {
     try {
-      const response = await axios.get("/api/recipes/history");
+      const response = await axios.get("/api/chats/history");
       return response.data;
     } catch (error: unknown) {
       const axiosError = error as {
@@ -150,7 +150,24 @@ export const recipeAPI = {
     foodName: string
   ): Promise<ApiResponse<RecipeGenerateResponse>> => {
     try {
-      const response = await axios.post("/api/chats", { question: foodName });
+      // 로컬스토리지에서 설정 가져오기
+      let allergies: string[] = [];
+      let isVegan = false;
+      
+      if (typeof window !== "undefined") {
+        const settings = localStorage.getItem("userSettings");
+        if (settings) {
+          const parsed = JSON.parse(settings);
+          allergies = parsed.allergies || [];
+          isVegan = parsed.isVegan || false;
+        }
+      }
+      
+      const response = await axios.post("/api/chats", { 
+        query: foodName,
+        allergies,
+        isVegan
+      });
       return response.data;
     } catch (error: unknown) {
       const axiosError = error as {

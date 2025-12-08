@@ -163,10 +163,13 @@ export const recipeAPI = {
         }
       }
       
-      const response = await axios.post("/api/chats", { 
+      const response = await axios.post("/api/chats", {
         query: foodName,
         allergies,
         isVegan
+      },
+      {
+        timeout: 60_000 // 60초 (밀리초 단위)
       });
       return response.data;
     } catch (error: unknown) {
